@@ -1,0 +1,55 @@
+{
+  "name": "base-d3",
+  "version": "2.0.0",
+  "description": "Base para cualquier proyecto de visualización de datos | Jorge Aznar {civic/data/designer} https://jorgeatgu.com",
+  "main": "gulpfile.js",
+  "repository": "jorgeatgu/base",
+  "keywords": [
+    "init",
+    "d3",
+    "dataViz"
+  ],
+  "author": "Jorge Aznar",
+  "lint-staged": {
+    "src/css/*.css": "stylelint"
+  },
+  "pre-commit": "lint-staged",
+  "scripts": {
+    "server-on": "browser-sync start --server --files '*.css, *.html' --tunnel jorgeatgu",
+    "lint-staged": "lint-staged",
+    "build:release": "gulp build"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/preset-env": "^7.4.1",
+    "babel-core": "^6.26.3",
+    "babel-preset-env": "^1.7.0",
+    "browser-sync": "^2.26.3",
+    "debounce": "^1.2.0",
+    "eslint-plugin-import": "^2.16.0",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^6.0.0",
+    "gulp-babel": "^8.0.0",
+    "gulp-cssnano": "^2.1.3",
+    "gulp-imagemin": "^5.0.3",
+    "gulp-newer": "^1.4.0",
+    "gulp-notify": "^3.2.0",
+    "gulp-postcss": "^8.0.0",
+    "gulp-sourcemaps": "^2.6.5",
+    "gulp-terser": "^1.1.7",
+    "lint-staged": "^8.1.5",
+    "postcss-custom-properties": "^8.0.9",
+    "postcss-custom-selectors": "^5.1.2",
+    "postcss-import": "^12.0.1",
+    "postcss-nested": "^4.1.2",
+    "postcss-normalize": "^7.0.1",
+    "postcss-reporter": "^6.0.1",
+    "postcss-sorting": "^4.1.0",
+    "pre-commit": "^1.2.2",
+    "prettier": "^1.16.4",
+    "rollup": "^1.7.0",
+    "rollup-plugin-node-resolve": "^4.0.1",
+    "stylelint": "^9.10.1",
+    "uglify-es": "^3.3.9"
+  }
+}

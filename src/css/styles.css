@@ -5,3 +5,93 @@
 */
 
 @import '_variables';
+
+body {
+    margin: 0;
+    background-color: var(--black);
+}
+
+.circles {
+    fill: var(--white);
+}
+
+.circles-color {
+    fill-opacity: .8;
+}
+
+.scroll-ao {
+    height: 60vh;
+}
+
+.header {
+    height: 100vh;
+    background-color: var(--black);
+    position: relative;
+}
+
+.chart-ao-color {
+    background-color: var(--white);
+}
+
+.header-title {
+    font-size: 3rem;
+    font-family: var(--title);
+    color: var(--white);
+    position: absolute;
+    letter-spacing: 3px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#scroll {
+    position: relative;
+    display: -webkit-box;
+    /* stylelint-disable */
+    display: -ms-flexbox;
+    display: flex;
+    /* stylelint-enable */
+    background-color: var(--black);
+    padding: 1rem;
+}
+
+#scroll > * {
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+}
+
+.step-container {
+    position: relative;
+    padding: 0 1rem;
+    max-width: 20rem;
+}
+
+.chart-ao {
+    /* stylelint-disable */
+    position: -webkit-sticky;
+    position: sticky;
+    /* stylelint-enable */
+    width: 100%;
+    margin: 0;
+    -webkit-transform: translate3d(0, 0, 0);
+    -moz-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    top: 10vh;
+    height: 600px;
+}
+
+.step {
+    margin: 1rem auto;
+    background-color: var(--white);
+    border-radius: 4px;
+}
+
+.step-title {
+    font-size: 1.5rem;
+    font-family: var(--title-step);
+    color: var(--black);
+    padding: .5rem;
+    margin: .5rem;
+    text-align: center;
+}

@@ -37,7 +37,7 @@ function ao() {
             .attr('class', 'circles circle-primero')
             .attr('r', 0)
             .attr('cy', h / 2)
-            .attr('cx', w / 2)
+            .attr('cx', 0)
             .transition()
             .delay((d, i) => i * 10)
             .duration(500)
@@ -47,7 +47,10 @@ function ao() {
             .attr('cx', (d) => d.cx);
 
         function scrollCircles(primero, segundo) {
-            let year = new RegExp(`20[${primero}-${primero}][${segundo}-${segundo}]`, 'g');
+            let year = new RegExp(
+                `20[${primero}-${primero}][${segundo}-${segundo}]`,
+                'g'
+            );
             const data = dataz.filter((d) => String(d.year).match(year));
             const circles = container
                 .selectAll(`.circle-${primero}-${segundo}`)
@@ -59,7 +62,7 @@ function ao() {
                 .attr('class', `circles circle-${primero}-${segundo}`)
                 .attr('r', 0)
                 .attr('cy', h / 2)
-                .attr('cx', w / 2)
+                .attr('cx', 0)
                 .transition()
                 .duration(500)
                 .attr('r', (d) => d.radius * 1.25)
@@ -76,8 +79,10 @@ function ao() {
 
                     const container = chart.select('.chart-ao-container-bis');
 
-                    d3.select('.chart-ao')
-                        .style('background-color', 'var(--white)');
+                    d3.select('.chart-ao').style(
+                        'background-color',
+                        'var(--white)'
+                    );
 
                     container
                         .selectAll('.circles')
@@ -169,18 +174,7 @@ function ao() {
                     !response.element.classList.contains('scrollaunch')
                 ) {
                     scrollCircles(1, 7);
-                    response.element.classList.add('scrollaunch');
-                } else if (
-                    response.index === 11 &&
-                    !response.element.classList.contains('scrollaunch')
-                ) {
                     scrollCircles(1, 8);
-                    response.element.classList.add('scrollaunch');
-                } else if (
-                    response.index === 12 &&
-                    !response.element.classList.contains('scrollaunch')
-                ) {
-                    aototal();
                     response.element.classList.add('scrollaunch');
                 }
             };
@@ -228,72 +222,3 @@ function ao() {
 }
 
 ao();
-
-function aototal() {
-    const margin = {
-        top: 16,
-        right: 16,
-        bottom: 32,
-        left: 48
-    };
-    const chart = d3.select('.chart-ao-color');
-    const svg = chart.select('svg');
-    let dataz;
-
-    const setupElements = () => {
-        const g = svg.select('.chart-ao-color-container');
-
-        g.append('g').attr('class', 'chart-ao-color-container-bis');
-    };
-
-    const updateChart = (data16) => {
-        const w = chart.node().offsetWidth;
-        const h = 650;
-
-        svg.attr('width', w).attr('height', h);
-
-        const translate = `translate(${margin.left},${margin.top})`;
-
-        const g = svg.select('.chart-ao-color-container');
-
-        g.attr('transform', translate);
-
-        const container = chart.select('.chart-ao-color-container-bis');
-
-        container
-                                .selectAll('.circles')
-                                .remove()
-                                .exit()
-                                .data(dataz)
-                                .enter()
-                                .append('circle')
-                                .attr('class', 'circles-color')
-                                .attr('r', 0)
-                                .attr('cy', h / 2)
-                                .attr('cx', w / 2)
-                                .transition()
-                                .delay((d, i) => i * 1)
-                                .duration(200)
-                                .ease(d3.easeLinear)
-                                .attr('r', (d) => d.radius * 1.25)
-                                .attr('cy', (d) => d.cy)
-                                .attr('cx', (d) => d.cx)
-                                .attr('fill', (d) => d.fill);
-
-    };
-
-    const loadData = () => {
-        d3.csv('csv/ao-color.csv', (error, data) => {
-            if (error) {
-                console.log(error);
-            } else {
-                dataz = data;
-
-                setupElements();
-                updateChart(dataz);
-            }
-        });
-    };
-
-    loadData();
-}

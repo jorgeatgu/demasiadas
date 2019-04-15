@@ -1,10 +1,5 @@
-/*
-  Base CSS por Jorge Aznar
-  https://jorgeatgu.com
-  Estructura básica para iniciar cualquier proyecto con postCSS
-*/
-
 @import '_variables';
+@import '_scroll';
 
 html {
     line-height: 1.3;
@@ -15,29 +10,16 @@ body {
     background-color: var(--black);
 }
 
-.circles {
-    fill: var(--white);
-}
-
-.circles-color {
-    fill-opacity: .8;
-}
-
-.scroll-ao {
-    height: auto;
-    padding: 1rem;
-}
-
 .header {
-    height: 100vh;
-    background-color: var(--black);
+    height: 20vh;
+    background-color: var(--purple);
     position: relative;
 }
 
 .header-title {
-    font-size: 3rem;
+    font-size: 2rem;
     font-family: var(--title);
-    background-color: var(--black);
+    background-color: var(--purple);
     color: var(--white);
     position: absolute;
     letter-spacing: 3px;
@@ -49,76 +31,8 @@ body {
     transform: translate(-50%, -50%);
 }
 
-.header-svg {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-#scroll {
-    position: relative;
-    display: -webkit-box;
-    /* stylelint-disable */
-    display: -ms-flexbox;
-    display: flex;
-    /* stylelint-enable */
-    background-color: var(--black);
-    padding: 5rem 1rem;
-}
-
-#scroll > * {
-    -webkit-box-flex: 1;
-    -ms-flex: 1;
-    flex: 1;
-}
-
-.step-container {
-    position: relative;
-    padding: 0 1rem;
-    max-width: 20rem;
-}
-
-.chart-ao {
-    /* stylelint-disable */
-    position: -webkit-sticky;
-    position: sticky;
-    /* stylelint-enable */
-    width: 100%;
-    margin: 0;
-    -webkit-transform: translate3d(0, 0, 0);
-    -moz-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
-    top: 10vh;
-    height: 600px;
-}
-
-.step {
-    margin: 3rem auto;
-    background-color: #fbcb05;
-    border-radius: 4px;
-    height: 35vh;
-}
-
-.step-title {
-    font-size: 1.5rem;
-    font-family: var(--title-step);
-    color: var(--black);
-    padding: 0;
-    margin-top: 0;
-    margin-bottom: .25rem;
-}
-
-.step-number {
-    font-size: 12rem;
-    font-family: var(--number);
-    line-height: 1;
-}
-
-.step-text {
-    margin: 0;
-    font-family: var(--number);
-    text-transform: uppercase;
+.circles {
+    fill: var(--white);
 }
 
 .chart-container {
@@ -126,7 +40,7 @@ body {
 }
 
 .chart-ao-text {
-    width: 40rem;
+    width: 90%;
     margin: 0 auto;
     padding: 3rem 0;
 }
@@ -140,4 +54,18 @@ body {
     font-size: 1rem;
     font-family: var(--text);
     max-width: 25rem;
+}
+
+@media only screen and (min-width: 48em) {
+    .chart-ao-text {
+        width: 30rem;
+    }
+
+    .header-title {
+        font-size: 3rem;
+    }
+
+    .header {
+        height: 100vh;
+    }
 }

@@ -3,6 +3,9 @@
     --monospace: 'SFMono-Regular', Consolas, Menlo, Courier, monospace;
     --black: #111;
     --white: #fff;
+    --yellow: #FAC92F;
+    --purple: #170b38;
+    --yellowalpha: rgba(250, 201, 47, .8);
     --title-step: 'Staatliches', cursive;
     --title: 'Notable', sans-serif;
     --text: 'IBM Plex Serif', serif;

@@ -1,3 +1,5 @@
+const widthMobile = window.innerWidth > 0 ? window.innerWidth : screen.width;
+
 function ao() {
     const margin = {
         top: 16,
@@ -29,23 +31,6 @@ function ao() {
 
         const container = chart.select('.chart-ao-container-bis');
 
-        container
-            .selectAll('.circle-primero')
-            .data(data16)
-            .enter()
-            .append('circle')
-            .attr('class', 'circles circle-primero')
-            .attr('r', 0)
-            .attr('cy', h / 2)
-            .attr('cx', 0)
-            .transition()
-            .delay((d, i) => i * 10)
-            .duration(500)
-            .ease(d3.easeLinear)
-            .attr('r', (d) => d.radius * 1.25)
-            .attr('cy', (d) => d.cy)
-            .attr('cx', (d) => d.cx);
-
         function scrollCircles(primero, segundo) {
             let year = new RegExp(
                 `20[${primero}-${primero}][${segundo}-${segundo}]`,
@@ -61,50 +46,35 @@ function ao() {
                 .append('circle')
                 .attr('class', `circles circle-${primero}-${segundo}`)
                 .attr('r', 0)
-                .attr('cy', h / 2)
-                .attr('cx', 0)
+                .attr('cy', (d) => {
+                    if (widthMobile > 544) {
+                        return h / 2;
+                    }
+                    return 0;
+                })
+                .attr('cx', (d) => {
+                    if (widthMobile > 544) {
+                        return -60;
+                    }
+                    return w / 2;
+                })
                 .transition()
+                .delay((d, i) => i * 10)
                 .duration(500)
+                .ease(d3.easeLinear)
                 .attr('r', (d) => d.radius * 1.25)
-                .attr('cy', (d) => d.cy)
-                .attr('cx', (d) => d.cx);
-        }
-
-        function aoColor() {
-            d3.csv('csv/ao-color.csv', (error, data) => {
-                if (error) {
-                    console.log(error);
-                } else {
-                    dataz = data;
-
-                    const container = chart.select('.chart-ao-container-bis');
-
-                    d3.select('.chart-ao').style(
-                        'background-color',
-                        'var(--white)'
-                    );
-
-                    container
-                        .selectAll('.circles')
-                        .remove()
-                        .exit()
-                        .data(dataz)
-                        .enter()
-                        .append('circle')
-                        .attr('class', 'circles-color')
-                        .attr('r', 0)
-                        .attr('cy', h / 2)
-                        .attr('cx', w / 2)
-                        .transition()
-                        .delay((d, i) => i * 1)
-                        .duration(200)
-                        .ease(d3.easeLinear)
-                        .attr('r', (d) => d.radius * 1.25)
-                        .attr('cy', (d) => d.cy)
-                        .attr('cx', (d) => d.cx)
-                        .attr('fill', (d) => d.fill);
-                }
-            });
+                .attr('cy', (d) => {
+                    if (widthMobile > 544) {
+                        return d.cy;
+                    }
+                    return d.cy - 10;
+                })
+                .attr('cx', (d) => {
+                    if (widthMobile > 544) {
+                        return d.cx - 100;
+                    }
+                    return d.cx - 330;
+                });
         }
 
         const scrolama = () => {
@@ -116,6 +86,12 @@ function ao() {
             const handleStepEnter = (response) => {
                 // response = { element, direction, index }
                 if (
+                    response.index === 0 &&
+                    !response.element.classList.contains('scrollaunch')
+                ) {
+                    scrollCircles(0, 7);
+                    response.element.classList.add('scrollaunch');
+                } else if (
                     response.index === 1 &&
                     !response.element.classList.contains('scrollaunch')
                 ) {
@@ -176,6 +152,23 @@ function ao() {
                     scrollCircles(1, 7);
                     scrollCircles(1, 8);
                     response.element.classList.add('scrollaunch');
+                } else if (
+                    response.index === 11 &&
+                    !response.element.classList.contains('scrollaunch')
+                ) {
+                    response.element.classList.add('scrollaunch');
+                    svg.attr('viewBox', '0 0 970 650')
+                        .transition()
+                        .delay((d, i) => i * 10)
+                        .duration(600)
+                        .ease(d3.easeLinear)
+                        .attr('viewBox', (d) => {
+                            if (widthMobile > 768) {
+                                return '500 -800 1270 1650';
+                            }
+                            return '-450 -800 1270 1650';
+                        });
+
                 }
             };
 
@@ -207,11 +200,9 @@ function ao() {
                 console.log(error);
             } else {
                 dataz = data;
-                let year = new RegExp('20[0-0][7-7]', 'g');
-                const data16 = dataz.filter((d) => String(d.year).match(year));
 
                 setupElements();
-                updateChart(data16);
+                updateChart(dataz);
             }
         });
     };

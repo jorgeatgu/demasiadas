@@ -11,15 +11,14 @@ body {
 }
 
 .header {
-    height: 20vh;
-    background-color: var(--purple);
+    height: 90vh;
+    background: linear-gradient(170deg, var(--purple) 40% , #312247 74%, var(--black) 90%);
     position: relative;
 }
 
 .header-title {
     font-size: 2rem;
     font-family: var(--title);
-    background-color: var(--purple);
     color: var(--white);
     position: absolute;
     letter-spacing: 3px;
@@ -54,6 +53,11 @@ body {
     font-size: 1rem;
     font-family: var(--text);
     max-width: 25rem;
+}
+
+.datos-title {
+    font-family: var(--text);
+    margin-bottom: 0;
 }
 
 @media only screen and (min-width: 48em) {

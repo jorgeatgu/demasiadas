@@ -47,13 +47,13 @@ function ao() {
                 .attr('class', `circles circle-${primero}-${segundo}`)
                 .attr('r', 0)
                 .attr('cy', (d) => {
-                    if (widthMobile > 544) {
+                    if (widthMobile > 768) {
                         return h / 2;
                     }
                     return 0;
                 })
                 .attr('cx', (d) => {
-                    if (widthMobile > 544) {
+                    if (widthMobile > 768) {
                         return -60;
                     }
                     return w / 2;
@@ -62,18 +62,18 @@ function ao() {
                 .delay((d, i) => i * 10)
                 .duration(500)
                 .ease(d3.easeLinear)
-                .attr('r', (d) => d.radius * 1.25)
+                .attr('r', (d) => d.radius)
                 .attr('cy', (d) => {
-                    if (widthMobile > 544) {
+                    if (widthMobile > 768) {
                         return d.cy;
                     }
                     return d.cy - 10;
                 })
                 .attr('cx', (d) => {
-                    if (widthMobile > 544) {
+                    if (widthMobile > 768) {
                         return d.cx - 100;
                     }
-                    return d.cx - 330;
+                    return d.cx - 240;
                 });
         }
 
@@ -89,86 +89,112 @@ function ao() {
                     response.index === 0 &&
                     !response.element.classList.contains('scrollaunch')
                 ) {
-                    scrollCircles(0, 7);
+                    scrollCircles(0, 0);
                     response.element.classList.add('scrollaunch');
                 } else if (
                     response.index === 1 &&
                     !response.element.classList.contains('scrollaunch')
                 ) {
-                    scrollCircles(0, 8);
+                    scrollCircles(0, 1);
                     response.element.classList.add('scrollaunch');
                 } else if (
                     response.index === 2 &&
                     !response.element.classList.contains('scrollaunch')
                 ) {
-                    scrollCircles(0, 9);
+                    scrollCircles(0, 2);
                     response.element.classList.add('scrollaunch');
                 } else if (
                     response.index === 3 &&
                     !response.element.classList.contains('scrollaunch')
                 ) {
-                    scrollCircles(1, 0);
+                    scrollCircles(0, 3);
                     response.element.classList.add('scrollaunch');
                 } else if (
                     response.index === 4 &&
                     !response.element.classList.contains('scrollaunch')
                 ) {
-                    scrollCircles(1, 1);
+                    scrollCircles(0, 4);
                     response.element.classList.add('scrollaunch');
                 } else if (
                     response.index === 5 &&
                     !response.element.classList.contains('scrollaunch')
                 ) {
-                    scrollCircles(1, 2);
+                    scrollCircles(0, 5);
                     response.element.classList.add('scrollaunch');
                 } else if (
                     response.index === 6 &&
                     !response.element.classList.contains('scrollaunch')
                 ) {
-                    scrollCircles(1, 3);
+                    scrollCircles(0, 6);
                     response.element.classList.add('scrollaunch');
                 } else if (
                     response.index === 7 &&
                     !response.element.classList.contains('scrollaunch')
                 ) {
-                    scrollCircles(1, 4);
+                    scrollCircles(0, 7);
                     response.element.classList.add('scrollaunch');
                 } else if (
                     response.index === 8 &&
                     !response.element.classList.contains('scrollaunch')
                 ) {
-                    scrollCircles(1, 5);
+                    scrollCircles(0, 8);
                     response.element.classList.add('scrollaunch');
                 } else if (
                     response.index === 9 &&
                     !response.element.classList.contains('scrollaunch')
                 ) {
-                    scrollCircles(1, 6);
+                    scrollCircles(0, 9);
                     response.element.classList.add('scrollaunch');
                 } else if (
                     response.index === 10 &&
                     !response.element.classList.contains('scrollaunch')
                 ) {
-                    scrollCircles(1, 7);
-                    scrollCircles(1, 8);
+                    scrollCircles(1, 0);
                     response.element.classList.add('scrollaunch');
                 } else if (
                     response.index === 11 &&
                     !response.element.classList.contains('scrollaunch')
                 ) {
+                    scrollCircles(1, 1);
                     response.element.classList.add('scrollaunch');
-                    svg.attr('viewBox', '0 0 970 650')
-                        .transition()
-                        .delay((d, i) => i * 10)
-                        .duration(600)
-                        .ease(d3.easeLinear)
-                        .attr('viewBox', (d) => {
-                            if (widthMobile > 768) {
-                                return '500 -800 1270 1650';
-                            }
-                            return '-450 -800 1270 1650';
-                        });
-
+                } else if (
+                    response.index === 12 &&
+                    !response.element.classList.contains('scrollaunch')
+                ) {
+                    scrollCircles(1, 2);
+                    response.element.classList.add('scrollaunch');
+                } else if (
+                    response.index === 13 &&
+                    !response.element.classList.contains('scrollaunch')
+                ) {
+                    scrollCircles(1, 3);
+                    response.element.classList.add('scrollaunch');
+                } else if (
+                    response.index === 14 &&
+                    !response.element.classList.contains('scrollaunch')
+                ) {
+                    scrollCircles(1, 4);
+                    response.element.classList.add('scrollaunch');
+                } else if (
+                    response.index === 15 &&
+                    !response.element.classList.contains('scrollaunch')
+                ) {
+                    scrollCircles(1, 5);
+                    response.element.classList.add('scrollaunch');
+                } else if (
+                    response.index === 16 &&
+                    !response.element.classList.contains('scrollaunch')
+                ) {
+                    scrollCircles(1, 6);
+                    response.element.classList.add('scrollaunch');
+                } else if (
+                    response.index === 17 &&
+                    !response.element.classList.contains('scrollaunch')
+                ) {
+                    scrollCircles(1, 7);
+                    scrollCircles(1, 8);
+                    scrollCircles(1, 9);
+                    response.element.classList.add('scrollaunch');
                 }
             };
 
@@ -190,9 +216,9 @@ function ao() {
         scrolama();
     };
 
-    /*const resize = () => {
+    const resize = () => {
         updateChart(dataz);
-    };*/
+    };
 
     const loadData = () => {
         d3.csv('csv/ao.csv', (error, data) => {
@@ -207,7 +233,7 @@ function ao() {
         });
     };
 
-    /*    window.addEventListener('resize', resize);*/
+        window.addEventListener('resize', resize);
 
     loadData();
 }

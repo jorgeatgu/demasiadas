@@ -4,7 +4,6 @@
     padding: 2rem 0;
     grid-template-columns: 100%;
     display: grid;
-    grid-row-gap: 3rem;
 }
 
 .scroll-graphic {
@@ -19,7 +18,6 @@
 
 .scroll-text {
     position: relative;
-    padding: 1rem;
     order: 2;
     z-index: 2;
 }
@@ -39,8 +37,8 @@
 }
 
 .step-title {
-    font-size: 1.5rem;
-    font-family: var(--title-step);
+    font-size: 1rem;
+    font-family: var(--number);
     color: var(--black);
     padding: 0;
     margin-top: 0;
@@ -48,7 +46,7 @@
 }
 
 .step-number {
-    font-size: 6rem;
+    font-size: 4rem;
     font-family: var(--number);
     line-height: 1;
 }
@@ -99,6 +97,10 @@
     .step-subcontainer {
         padding: 3rem 1rem;
         background-color: var(--yellow);
+    }
+
+    .step-title {
+        font-size: 1rem;
     }
 
 }

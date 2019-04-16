@@ -62,7 +62,7 @@ function ao() {
                 .delay((d, i) => i * 10)
                 .duration(500)
                 .ease(d3.easeLinear)
-                .attr('r', (d) => d.radius)
+                .attr('r', 2)
                 .attr('cy', (d) => {
                     if (widthMobile > 768) {
                         return d.cy;
@@ -77,6 +77,44 @@ function ao() {
                 });
         }
 
+        function ana() {
+            d3.selectAll('.circles')
+                .data(dataz)
+                .attr('r', 0)
+                .attr('cx', (d) => {
+                    if (widthMobile > 768) {
+                        return d.cx - 10;
+                    }
+                    return d.cx - 250;
+                })
+                .attr('cy', (d) => d.cy - 10)
+                .transition()
+                .delay((d, i) => i * 2)
+                .duration(300)
+                .ease(d3.easeLinear)
+                .attr('r', (d) => d.radius)
+                .attr('cy', (d) => {
+                    if (widthMobile > 768) {
+                        return d.cy;
+                    }
+                    return d.cy - 10;
+                })
+                .attr('cx', (d) => {
+                    if (widthMobile > 768) {
+                        return d.cx;
+                    }
+                    return d.cx - 240;
+                });
+        }
+
+        function asesinadas(numero) {
+            d3.select('.asesinadas-numero')
+                .transition()
+                .duration(300)
+                .ease(d3.easeLinear)
+                .text(numero);
+        }
+
         const scrolama = () => {
             let container = document.querySelector('#scroll');
             let steps = container.querySelectorAll('.scroll-ao');
@@ -85,116 +123,69 @@ function ao() {
             // scrollama event handlers
             const handleStepEnter = (response) => {
                 // response = { element, direction, index }
-                if (
-                    response.index === 0 &&
-                    !response.element.classList.contains('scrollaunch')
-                ) {
+                if (response.index === 0) {
+                    d3.selectAll('.circles')
+                        .remove()
+                        .exit();
                     scrollCircles(0, 0);
-                    response.element.classList.add('scrollaunch');
-                } else if (
-                    response.index === 1 &&
-                    !response.element.classList.contains('scrollaunch')
-                ) {
+                    asesinadas(54);
+                    console.log('primera iteración')
+                } else if (response.index === 1) {
                     scrollCircles(0, 1);
-                    response.element.classList.add('scrollaunch');
-                } else if (
-                    response.index === 2 &&
-                    !response.element.classList.contains('scrollaunch')
-                ) {
+                    asesinadas(104);
+                } else if (response.index === 2) {
                     scrollCircles(0, 2);
-                    response.element.classList.add('scrollaunch');
-                } else if (
-                    response.index === 3 &&
-                    !response.element.classList.contains('scrollaunch')
-                ) {
+                    asesinadas(158);
+                } else if (response.index === 3) {
                     scrollCircles(0, 3);
-                    response.element.classList.add('scrollaunch');
-                } else if (
-                    response.index === 4 &&
-                    !response.element.classList.contains('scrollaunch')
-                ) {
+                    asesinadas(229);
+                } else if (response.index === 4) {
                     scrollCircles(0, 4);
-                    response.element.classList.add('scrollaunch');
-                } else if (
-                    response.index === 5 &&
-                    !response.element.classList.contains('scrollaunch')
-                ) {
+                    asesinadas(301);
+                } else if (response.index === 5) {
                     scrollCircles(0, 5);
-                    response.element.classList.add('scrollaunch');
-                } else if (
-                    response.index === 6 &&
-                    !response.element.classList.contains('scrollaunch')
-                ) {
+                    asesinadas(358);
+                } else if (response.index === 6) {
                     scrollCircles(0, 6);
-                    response.element.classList.add('scrollaunch');
-                } else if (
-                    response.index === 7 &&
-                    !response.element.classList.contains('scrollaunch')
-                ) {
+                    asesinadas(427);
+                } else if (response.index === 7) {
                     scrollCircles(0, 7);
-                    response.element.classList.add('scrollaunch');
-                } else if (
-                    response.index === 8 &&
-                    !response.element.classList.contains('scrollaunch')
-                ) {
+                    asesinadas(498);
+                } else if (response.index === 8) {
                     scrollCircles(0, 8);
-                    response.element.classList.add('scrollaunch');
-                } else if (
-                    response.index === 9 &&
-                    !response.element.classList.contains('scrollaunch')
-                ) {
+                    asesinadas(574);
+                } else if (response.index === 9) {
                     scrollCircles(0, 9);
-                    response.element.classList.add('scrollaunch');
-                } else if (
-                    response.index === 10 &&
-                    !response.element.classList.contains('scrollaunch')
-                ) {
+                    asesinadas(640);
+                } else if (response.index === 10) {
                     scrollCircles(1, 0);
-                    response.element.classList.add('scrollaunch');
-                } else if (
-                    response.index === 11 &&
-                    !response.element.classList.contains('scrollaunch')
-                ) {
+                    asesinadas(713);
+                } else if (response.index === 11) {
                     scrollCircles(1, 1);
-                    response.element.classList.add('scrollaunch');
-                } else if (
-                    response.index === 12 &&
-                    !response.element.classList.contains('scrollaunch')
-                ) {
+                    asesinadas(774);
+                } else if (response.index === 12) {
                     scrollCircles(1, 2);
-                    response.element.classList.add('scrollaunch');
-                } else if (
-                    response.index === 13 &&
-                    !response.element.classList.contains('scrollaunch')
-                ) {
+                    asesinadas(826);
+                } else if (response.index === 13) {
                     scrollCircles(1, 3);
-                    response.element.classList.add('scrollaunch');
-                } else if (
-                    response.index === 14 &&
-                    !response.element.classList.contains('scrollaunch')
-                ) {
+                    asesinadas(880);
+                } else if (response.index === 14) {
                     scrollCircles(1, 4);
-                    response.element.classList.add('scrollaunch');
-                } else if (
-                    response.index === 15 &&
-                    !response.element.classList.contains('scrollaunch')
-                ) {
+                    asesinadas(935);
+                } else if (response.index === 15) {
                     scrollCircles(1, 5);
-                    response.element.classList.add('scrollaunch');
-                } else if (
-                    response.index === 16 &&
-                    !response.element.classList.contains('scrollaunch')
-                ) {
+                    asesinadas(995);
+                } else if (response.index === 16) {
                     scrollCircles(1, 6);
-                    response.element.classList.add('scrollaunch');
-                } else if (
-                    response.index === 17 &&
-                    !response.element.classList.contains('scrollaunch')
-                ) {
                     scrollCircles(1, 7);
+                    asesinadas(1044);
+                } else if (response.index === 17) {
                     scrollCircles(1, 8);
                     scrollCircles(1, 9);
-                    response.element.classList.add('scrollaunch');
+                    asesinadas(1095);
+                } else if (response.index === 18) {
+                    ana();
+                    asesinadas(1142);
                 }
             };
 
@@ -233,7 +224,7 @@ function ao() {
         });
     };
 
-        window.addEventListener('resize', resize);
+    window.addEventListener('resize', resize);
 
     loadData();
 }

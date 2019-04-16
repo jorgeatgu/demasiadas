@@ -12,7 +12,7 @@ body {
 
 .header {
     height: 90vh;
-    background: linear-gradient(170deg, var(--purple) 40% , #312247 74%, var(--black) 90%);
+    background: linear-gradient(170deg, var(--purple) 40% , var(--black) 100%);
     position: relative;
 }
 
@@ -58,6 +58,25 @@ body {
 .datos-title {
     font-family: var(--text);
     margin-bottom: 0;
+}
+
+.asesinadas {
+    /* stylelint-disable */
+    position: -webkit-sticky;
+    position: sticky;
+    /* stylelint-enable */
+    top: 90vh;
+    text-align: right;
+    z-index: 10;
+    font-size: 1rem;
+    font-family: var(--text);
+    color: var(--white);
+    padding: .5rem;
+}
+
+.asesinadas-numero {
+    font-size: 2rem;
+    font-family: var(--number);
 }
 
 @media only screen and (min-width: 48em) {

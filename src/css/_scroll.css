@@ -7,13 +7,16 @@
 }
 
 .scroll-graphic {
+    order: 1;
+    z-index: 1;
     /* stylelint-disable */
     position: -webkit-sticky;
     position: sticky;
     /* stylelint-enable */
-    top: 5vh;
-    order: 1;
-    z-index: 1;
+    -webkit-transform: translate3d(0, 0, 0);
+    -moz-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    top: 0;
 }
 
 .scroll-text {
@@ -28,7 +31,7 @@
 }
 
 .step-subcontainer {
-    background-color: var(--yellowalpha);
+    background-color: #FB5A60;
     border-radius: 4px;
     padding: 1rem;
     text-align: center;
@@ -58,24 +61,16 @@
 }
 
 .chart-ao {
-    /* stylelint-disable */
-    position: -webkit-sticky;
-    position: sticky;
-    /* stylelint-enable */
     width: 100%;
     margin: 0;
-    -webkit-transform: translate3d(0, 0, 0);
-    -moz-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
-    top: 10vh;
-    height: 600px;
+    position: static;
 }
 
 .step-container {
     margin: auto;
 }
 
-@media only screen and (min-width: 48em) {
+@media only screen and (min-width: 60em) {
     #scroll {
         padding: 5rem 0;
         grid-template-columns: 25rem 1fr;
@@ -83,7 +78,7 @@
 
     .scroll-graphic {
         order: 2;
-        top: 15vh;
+        position: static;
     }
 
     .scroll-text {
@@ -96,11 +91,18 @@
 
     .step-subcontainer {
         padding: 3rem 1rem;
-        background-color: var(--yellow);
     }
 
     .step-title {
         font-size: 1rem;
+    }
+
+    .chart-ao {
+        /* stylelint-disable */
+        position: -webkit-sticky;
+        position: sticky;
+        /* stylelint-enable */
+        top: 0;
     }
 
 }

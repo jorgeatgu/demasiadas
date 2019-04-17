@@ -12,7 +12,7 @@ body {
 
 .header {
     height: 90vh;
-    background: linear-gradient(170deg, var(--purple) 40% , var(--black) 100%);
+    background: linear-gradient(170deg, var(--purple) 40%, var(--black) 100%);
     position: relative;
 }
 
@@ -38,6 +38,33 @@ body {
     background-color: var(--white);
 }
 
+.grid-ao {
+    background-color: var(--white);
+}
+
+.grid-ao-element-white {
+    width: 90%;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+.grid-ao-black-container {
+    width: 100%;
+}
+
+.ilustration-xavier {
+    font-size: .75rem;
+    font-family: var(--text);
+    color: var(--black);
+    text-align: right;
+    display: block;
+    margin-bottom: .25rem;
+}
+
+.grid-ao-black-image {
+    width: 100%;
+}
+
 .chart-ao-text {
     width: 90%;
     margin: 0 auto;
@@ -47,6 +74,7 @@ body {
 .chart-ao-text-title {
     font-size: 2rem;
     font-family: var(--title);
+    margin-bottom: .5rem;
 }
 
 .chart-ao-text-paragraph {
@@ -81,7 +109,7 @@ body {
 
 @media only screen and (min-width: 48em) {
     .chart-ao-text {
-        width: 30rem;
+        width: 50rem;
     }
 
     .header-title {
@@ -90,5 +118,17 @@ body {
 
     .header {
         height: 100vh;
+    }
+
+    .grid-ao {
+        width: 100%;
+    }
+
+    .grid-ao-black-container {
+        margin-left: -15rem;
+    }
+
+    .grid-ao-element-white {
+        max-width: 50rem;
     }
 }

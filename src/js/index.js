@@ -58,6 +58,7 @@ function ao() {
                     }
                     return w / 2;
                 })
+                .attr('fill', 'var(--redstep)')
                 .transition()
                 .delay((d, i) => i * 10)
                 .duration(500)
@@ -71,7 +72,9 @@ function ao() {
                 })
                 .attr('cx', (d) => {
                     if (widthMobile > 768) {
-                        return d.cx - 100;
+                        return d.cx;
+                    } else if (widthMobile <= 768 && widthMobile > 500) {
+                        return d.cx - 50;
                     }
                     return d.cx - 240;
                 });
@@ -88,9 +91,11 @@ function ao() {
                     return d.cx - 250;
                 })
                 .attr('cy', (d) => d.cy - 10)
+                .attr('fill', 'var(--redstep)')
                 .transition()
                 .delay((d, i) => i * 2)
                 .duration(300)
+                .attr('fill', 'var(--white)')
                 .ease(d3.easeLinear)
                 .attr('r', (d) => d.radius)
                 .attr('cy', (d) => {
@@ -102,6 +107,8 @@ function ao() {
                 .attr('cx', (d) => {
                     if (widthMobile > 768) {
                         return d.cx;
+                    } else if (widthMobile <= 768 && widthMobile > 500) {
+                        return d.cx - 50;
                     }
                     return d.cx - 240;
                 });
@@ -129,7 +136,6 @@ function ao() {
                         .exit();
                     scrollCircles(0, 0);
                     asesinadas(54);
-                    console.log('primera iteración')
                 } else if (response.index === 1) {
                     scrollCircles(0, 1);
                     asesinadas(104);

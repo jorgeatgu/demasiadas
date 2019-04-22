@@ -5,41 +5,43 @@ html {
     line-height: 1.3;
 }
 
+* {
+    box-sizing: border-box;
+}
+
 body {
     margin: 0;
-    background-color: var(--black);
 }
 
 .header {
     height: 90vh;
     background: linear-gradient(170deg, var(--purple) 40%, var(--black) 100%);
     position: relative;
+    background-image: url(../img/header.jpg);
+    -webkit-background-size: cover;
+    background-size: cover;
+
 }
 
 .header-title {
     font-size: 2rem;
     font-family: var(--title);
-    color: var(--white);
+    color: #0d3538;
     position: absolute;
     letter-spacing: 3px;
-    padding: 2rem;
     margin: 0;
-    line-height: 1.3;
-    top: 50%;
+    top: 25%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
 
-.circles {
-    fill: var(--white);
-}
-
 .chart-container {
     background-color: var(--white);
+    width: 100%;
 }
 
 .grid-ao {
-    background-color: var(--white);
+    background-color: var(--purple-light);
 }
 
 .grid-ao-element-white {
@@ -56,7 +58,6 @@ body {
     font-size: .75rem;
     font-family: var(--text);
     color: var(--black);
-    text-align: right;
     display: block;
     margin-bottom: .25rem;
 }
@@ -74,18 +75,16 @@ body {
 .chart-ao-text-title {
     font-size: 2rem;
     font-family: var(--title);
-    margin-bottom: .5rem;
+    margin: .5rem auto;
+    max-width: 25rem;
 }
 
 .chart-ao-text-paragraph {
     font-size: 1rem;
     font-family: var(--text);
     max-width: 25rem;
-}
-
-.datos-title {
-    font-family: var(--text);
-    margin-bottom: 0;
+    margin: 1rem auto;
+    line-height: 1.4;
 }
 
 .asesinadas {
@@ -93,27 +92,64 @@ body {
     position: -webkit-sticky;
     position: sticky;
     /* stylelint-enable */
-    top: 90vh;
-    text-align: right;
+    top: 94vh;
     z-index: 10;
-    font-size: 1rem;
+    font-size: .75rem;
     font-family: var(--text);
     color: var(--white);
     padding: .5rem;
+    margin: 0;
+    margin-right: .5rem;
+    background-color: var(--black);
+    width: 100%;
+    text-align: center;
+    padding-bottom: 3rem;
 }
 
 .asesinadas-numero {
-    font-size: 2rem;
+    font-size: 1.25rem;
     font-family: var(--number);
 }
 
-@media only screen and (min-width: 48em) {
-    .chart-ao-text {
-        width: 50rem;
+.container-scroll {
+    background-color: var(--black);
+}
+
+.blend-container {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    background-color: #FCA300;
+
+    &:after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        transition: all ease-in-out .5s;
+        background-color: #e23241;
+        mix-blend-mode: lighten;
     }
+}
+
+.blend-image {
+    mix-blend-mode: darken;
+    -webkit-filter: grayscale(100%) contrast(1.5);
+    filter: grayscale(100%) contrast(1.5);
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: all ease-in-out .5s;
+}
+
+@media only screen and (min-width: 48rem) {
 
     .header-title {
-        font-size: 3rem;
+        font-size: 4rem;
     }
 
     .header {
@@ -125,10 +161,29 @@ body {
     }
 
     .grid-ao-black-container {
-        margin-left: -15rem;
+        margin-top: -4rem;
+        position: relative;
     }
 
     .grid-ao-element-white {
         max-width: 50rem;
     }
+
+    .asesinadas {
+        font-size: 1rem;
+        background-color: transparent;
+    }
+
+    .asesinadas-numero {
+        font-size: 2rem;
+    }
+
+}
+
+@media only screen and (min-width: 60rem) {
+
+    .header-title {
+        font-size: 7rem;
+    }
+
 }

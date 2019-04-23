@@ -5,7 +5,7 @@
         "NODE_ENV": "production"
     },
     "alias": [
-        "demasiadas.now.sh"
+        "demasiadas"
     ],
     "version": 2
 }

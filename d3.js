@@ -866,6 +866,116 @@
         : new Selection([selector == null ? [] : selector], root);
   }
 
+  var prefix = "$";
+
+  function Map() {}
+
+  Map.prototype = map.prototype = {
+    constructor: Map,
+    has: function(key) {
+      return (prefix + key) in this;
+    },
+    get: function(key) {
+      return this[prefix + key];
+    },
+    set: function(key, value) {
+      this[prefix + key] = value;
+      return this;
+    },
+    remove: function(key) {
+      var property = prefix + key;
+      return property in this && delete this[property];
+    },
+    clear: function() {
+      for (var property in this) if (property[0] === prefix) delete this[property];
+    },
+    keys: function() {
+      var keys = [];
+      for (var property in this) if (property[0] === prefix) keys.push(property.slice(1));
+      return keys;
+    },
+    values: function() {
+      var values = [];
+      for (var property in this) if (property[0] === prefix) values.push(this[property]);
+      return values;
+    },
+    entries: function() {
+      var entries = [];
+      for (var property in this) if (property[0] === prefix) entries.push({key: property.slice(1), value: this[property]});
+      return entries;
+    },
+    size: function() {
+      var size = 0;
+      for (var property in this) if (property[0] === prefix) ++size;
+      return size;
+    },
+    empty: function() {
+      for (var property in this) if (property[0] === prefix) return false;
+      return true;
+    },
+    each: function(f) {
+      for (var property in this) if (property[0] === prefix) f(this[property], property.slice(1), this);
+    }
+  };
+
+  function map(object, f) {
+    var map = new Map;
+
+    // Copy constructor.
+    if (object instanceof Map) object.each(function(value, key) { map.set(key, value); });
+
+    // Index array by numeric index or specified key function.
+    else if (Array.isArray(object)) {
+      var i = -1,
+          n = object.length,
+          o;
+
+      if (f == null) while (++i < n) map.set(i, object[i]);
+      else while (++i < n) map.set(f(o = object[i], i, object), o);
+    }
+
+    // Convert object to map.
+    else if (object) for (var key in object) map.set(key, object[key]);
+
+    return map;
+  }
+
+  function Set() {}
+
+  var proto = map.prototype;
+
+  Set.prototype = set.prototype = {
+    constructor: Set,
+    has: proto.has,
+    add: function(value) {
+      value += "";
+      this[prefix + value] = value;
+      return this;
+    },
+    remove: proto.remove,
+    clear: proto.clear,
+    values: proto.keys,
+    size: proto.size,
+    empty: proto.empty,
+    each: proto.each
+  };
+
+  function set(object, f) {
+    var set = new Set;
+
+    // Copy constructor.
+    if (object instanceof Set) object.each(function(value) { set.add(value); });
+
+    // Otherwise, assume it’s an array.
+    else if (object) {
+      var i = -1, n = object.length;
+      if (f == null) while (++i < n) set.add(object[i]);
+      else while (++i < n) set.add(f(object[i], i, object));
+    }
+
+    return set;
+  }
+
   var noop = {value: function() {}};
 
   function dispatch() {
@@ -908,8 +1018,8 @@
       // Otherwise, if a null callback was specified, remove callbacks of the given name.
       if (callback != null && typeof callback !== "function") throw new Error("invalid callback: " + callback);
       while (++i < n) {
-        if (t = (typename = T[i]).type) _[t] = set(_[t], typename.name, callback);
-        else if (callback == null) for (t in _) _[t] = set(_[t], typename.name, null);
+        if (t = (typename = T[i]).type) _[t] = set$1(_[t], typename.name, callback);
+        else if (callback == null) for (t in _) _[t] = set$1(_[t], typename.name, null);
       }
 
       return this;
@@ -938,7 +1048,7 @@
     }
   }
 
-  function set(type, name, callback) {
+  function set$1(type, name, callback) {
     for (var i = 0, n = type.length; i < n; ++i) {
       if (type[i].name === name) {
         type[i] = noop, type = type.slice(0, i).concat(type.slice(i + 1));
@@ -948,6 +1058,354 @@
     if (callback != null) type.push({name: name, value: callback});
     return type;
   }
+
+  function request(url, callback) {
+    var request,
+        event = dispatch("beforesend", "progress", "load", "error"),
+        mimeType,
+        headers = map(),
+        xhr = new XMLHttpRequest,
+        user = null,
+        password = null,
+        response,
+        responseType,
+        timeout = 0;
+
+    // If IE does not support CORS, use XDomainRequest.
+    if (typeof XDomainRequest !== "undefined"
+        && !("withCredentials" in xhr)
+        && /^(http(s)?:)?\/\//.test(url)) xhr = new XDomainRequest;
+
+    "onload" in xhr
+        ? xhr.onload = xhr.onerror = xhr.ontimeout = respond
+        : xhr.onreadystatechange = function(o) { xhr.readyState > 3 && respond(o); };
+
+    function respond(o) {
+      var status = xhr.status, result;
+      if (!status && hasResponse(xhr)
+          || status >= 200 && status < 300
+          || status === 304) {
+        if (response) {
+          try {
+            result = response.call(request, xhr);
+          } catch (e) {
+            event.call("error", request, e);
+            return;
+          }
+        } else {
+          result = xhr;
+        }
+        event.call("load", request, result);
+      } else {
+        event.call("error", request, o);
+      }
+    }
+
+    xhr.onprogress = function(e) {
+      event.call("progress", request, e);
+    };
+
+    request = {
+      header: function(name, value) {
+        name = (name + "").toLowerCase();
+        if (arguments.length < 2) return headers.get(name);
+        if (value == null) headers.remove(name);
+        else headers.set(name, value + "");
+        return request;
+      },
+
+      // If mimeType is non-null and no Accept header is set, a default is used.
+      mimeType: function(value) {
+        if (!arguments.length) return mimeType;
+        mimeType = value == null ? null : value + "";
+        return request;
+      },
+
+      // Specifies what type the response value should take;
+      // for instance, arraybuffer, blob, document, or text.
+      responseType: function(value) {
+        if (!arguments.length) return responseType;
+        responseType = value;
+        return request;
+      },
+
+      timeout: function(value) {
+        if (!arguments.length) return timeout;
+        timeout = +value;
+        return request;
+      },
+
+      user: function(value) {
+        return arguments.length < 1 ? user : (user = value == null ? null : value + "", request);
+      },
+
+      password: function(value) {
+        return arguments.length < 1 ? password : (password = value == null ? null : value + "", request);
+      },
+
+      // Specify how to convert the response content to a specific type;
+      // changes the callback value on "load" events.
+      response: function(value) {
+        response = value;
+        return request;
+      },
+
+      // Alias for send("GET", …).
+      get: function(data, callback) {
+        return request.send("GET", data, callback);
+      },
+
+      // Alias for send("POST", …).
+      post: function(data, callback) {
+        return request.send("POST", data, callback);
+      },
+
+      // If callback is non-null, it will be used for error and load events.
+      send: function(method, data, callback) {
+        xhr.open(method, url, true, user, password);
+        if (mimeType != null && !headers.has("accept")) headers.set("accept", mimeType + ",*/*");
+        if (xhr.setRequestHeader) headers.each(function(value, name) { xhr.setRequestHeader(name, value); });
+        if (mimeType != null && xhr.overrideMimeType) xhr.overrideMimeType(mimeType);
+        if (responseType != null) xhr.responseType = responseType;
+        if (timeout > 0) xhr.timeout = timeout;
+        if (callback == null && typeof data === "function") callback = data, data = null;
+        if (callback != null && callback.length === 1) callback = fixCallback(callback);
+        if (callback != null) request.on("error", callback).on("load", function(xhr) { callback(null, xhr); });
+        event.call("beforesend", request, xhr);
+        xhr.send(data == null ? null : data);
+        return request;
+      },
+
+      abort: function() {
+        xhr.abort();
+        return request;
+      },
+
+      on: function() {
+        var value = event.on.apply(event, arguments);
+        return value === event ? request : value;
+      }
+    };
+
+    if (callback != null) {
+      if (typeof callback !== "function") throw new Error("invalid callback: " + callback);
+      return request.get(callback);
+    }
+
+    return request;
+  }
+
+  function fixCallback(callback) {
+    return function(error, xhr) {
+      callback(error == null ? xhr : null);
+    };
+  }
+
+  function hasResponse(xhr) {
+    var type = xhr.responseType;
+    return type && type !== "text"
+        ? xhr.response // null on error
+        : xhr.responseText; // "" on error
+  }
+
+  var EOL = {},
+      EOF = {},
+      QUOTE = 34,
+      NEWLINE = 10,
+      RETURN = 13;
+
+  function objectConverter(columns) {
+    return new Function("d", "return {" + columns.map(function(name, i) {
+      return JSON.stringify(name) + ": d[" + i + "]";
+    }).join(",") + "}");
+  }
+
+  function customConverter(columns, f) {
+    var object = objectConverter(columns);
+    return function(row, i) {
+      return f(object(row), i, columns);
+    };
+  }
+
+  // Compute unique columns in order of discovery.
+  function inferColumns(rows) {
+    var columnSet = Object.create(null),
+        columns = [];
+
+    rows.forEach(function(row) {
+      for (var column in row) {
+        if (!(column in columnSet)) {
+          columns.push(columnSet[column] = column);
+        }
+      }
+    });
+
+    return columns;
+  }
+
+  function pad(value, width) {
+    var s = value + "", length = s.length;
+    return length < width ? new Array(width - length + 1).join(0) + s : s;
+  }
+
+  function formatYear(year) {
+    return year < 0 ? "-" + pad(-year, 6)
+      : year > 9999 ? "+" + pad(year, 6)
+      : pad(year, 4);
+  }
+
+  function formatDate(date) {
+    var hours = date.getUTCHours(),
+        minutes = date.getUTCMinutes(),
+        seconds = date.getUTCSeconds(),
+        milliseconds = date.getUTCMilliseconds();
+    return isNaN(date) ? "Invalid Date"
+        : formatYear(date.getUTCFullYear(), 4) + "-" + pad(date.getUTCMonth() + 1, 2) + "-" + pad(date.getUTCDate(), 2)
+        + (milliseconds ? "T" + pad(hours, 2) + ":" + pad(minutes, 2) + ":" + pad(seconds, 2) + "." + pad(milliseconds, 3) + "Z"
+        : seconds ? "T" + pad(hours, 2) + ":" + pad(minutes, 2) + ":" + pad(seconds, 2) + "Z"
+        : minutes || hours ? "T" + pad(hours, 2) + ":" + pad(minutes, 2) + "Z"
+        : "");
+  }
+
+  function dsv(delimiter) {
+    var reFormat = new RegExp("[\"" + delimiter + "\n\r]"),
+        DELIMITER = delimiter.charCodeAt(0);
+
+    function parse(text, f) {
+      var convert, columns, rows = parseRows(text, function(row, i) {
+        if (convert) return convert(row, i - 1);
+        columns = row, convert = f ? customConverter(row, f) : objectConverter(row);
+      });
+      rows.columns = columns || [];
+      return rows;
+    }
+
+    function parseRows(text, f) {
+      var rows = [], // output rows
+          N = text.length,
+          I = 0, // current character index
+          n = 0, // current line number
+          t, // current token
+          eof = N <= 0, // current token followed by EOF?
+          eol = false; // current token followed by EOL?
+
+      // Strip the trailing newline.
+      if (text.charCodeAt(N - 1) === NEWLINE) --N;
+      if (text.charCodeAt(N - 1) === RETURN) --N;
+
+      function token() {
+        if (eof) return EOF;
+        if (eol) return eol = false, EOL;
+
+        // Unescape quotes.
+        var i, j = I, c;
+        if (text.charCodeAt(j) === QUOTE) {
+          while (I++ < N && text.charCodeAt(I) !== QUOTE || text.charCodeAt(++I) === QUOTE);
+          if ((i = I) >= N) eof = true;
+          else if ((c = text.charCodeAt(I++)) === NEWLINE) eol = true;
+          else if (c === RETURN) { eol = true; if (text.charCodeAt(I) === NEWLINE) ++I; }
+          return text.slice(j + 1, i - 1).replace(/""/g, "\"");
+        }
+
+        // Find next delimiter or newline.
+        while (I < N) {
+          if ((c = text.charCodeAt(i = I++)) === NEWLINE) eol = true;
+          else if (c === RETURN) { eol = true; if (text.charCodeAt(I) === NEWLINE) ++I; }
+          else if (c !== DELIMITER) continue;
+          return text.slice(j, i);
+        }
+
+        // Return last token before EOF.
+        return eof = true, text.slice(j, N);
+      }
+
+      while ((t = token()) !== EOF) {
+        var row = [];
+        while (t !== EOL && t !== EOF) row.push(t), t = token();
+        if (f && (row = f(row, n++)) == null) continue;
+        rows.push(row);
+      }
+
+      return rows;
+    }
+
+    function preformatBody(rows, columns) {
+      return rows.map(function(row) {
+        return columns.map(function(column) {
+          return formatValue(row[column]);
+        }).join(delimiter);
+      });
+    }
+
+    function format(rows, columns) {
+      if (columns == null) columns = inferColumns(rows);
+      return [columns.map(formatValue).join(delimiter)].concat(preformatBody(rows, columns)).join("\n");
+    }
+
+    function formatBody(rows, columns) {
+      if (columns == null) columns = inferColumns(rows);
+      return preformatBody(rows, columns).join("\n");
+    }
+
+    function formatRows(rows) {
+      return rows.map(formatRow).join("\n");
+    }
+
+    function formatRow(row) {
+      return row.map(formatValue).join(delimiter);
+    }
+
+    function formatValue(value) {
+      return value == null ? ""
+          : value instanceof Date ? formatDate(value)
+          : reFormat.test(value += "") ? "\"" + value.replace(/"/g, "\"\"") + "\""
+          : value;
+    }
+
+    return {
+      parse: parse,
+      parseRows: parseRows,
+      format: format,
+      formatBody: formatBody,
+      formatRows: formatRows
+    };
+  }
+
+  var csv = dsv(",");
+
+  var csvParse = csv.parse;
+
+  var tsv = dsv("\t");
+
+  function dsv$1(defaultMimeType, parse) {
+    return function(url, row, callback) {
+      if (arguments.length < 3) callback = row, row = null;
+      var r = request(url).mimeType(defaultMimeType);
+      r.row = function(_) { return arguments.length ? r.response(responseOf(parse, row = _)) : row; };
+      r.row(row);
+      return callback ? r.get(callback) : r;
+    };
+  }
+
+  function responseOf(parse, row) {
+    return function(request) {
+      return parse(request.responseText, row);
+    };
+  }
+
+  var csv$1 = dsv$1("text/csv", csvParse);
+
+  function linear(t) {
+    return +t;
+  }
+
+  function cubicInOut(t) {
+    return ((t *= 2) <= 1 ? t * t * t : (t -= 2) * t * t + 2) / 2;
+  }
+
+  var pi = Math.PI;
+
+  var tau = 2 * Math.PI;
 
   var frame = 0, // is an animation frame pending?
       timeout = 0, // is a timeout pending?
@@ -1106,7 +1564,7 @@
     return schedule;
   }
 
-  function set$1(node, id) {
+  function set$2(node, id) {
     var schedule = get$1(node, id);
     if (schedule.state > STARTED) throw new Error("too late; already running");
     return schedule;
@@ -1778,7 +2236,7 @@
     };
   }
 
-  function linear(a, d) {
+  function linear$1(a, d) {
     return function(t) {
       return a + t * d;
     };
@@ -1798,7 +2256,7 @@
 
   function nogamma(a, b) {
     var d = b - a;
-    return d ? linear(a, d) : constant$1(isNaN(a) ? b : a);
+    return d ? linear$1(a, d) : constant$1(isNaN(a) ? b : a);
   }
 
   var interpolateRgb = (function rgbGamma(y) {
@@ -2009,7 +2467,7 @@
   function tweenRemove(id, name) {
     var tween0, tween1;
     return function() {
-      var schedule = set$1(this, id),
+      var schedule = set$2(this, id),
           tween = schedule.tween;
 
       // If this node shared tween with the previous node,
@@ -2034,7 +2492,7 @@
     var tween0, tween1;
     if (typeof value !== "function") throw new Error;
     return function() {
-      var schedule = set$1(this, id),
+      var schedule = set$2(this, id),
           tween = schedule.tween;
 
       // If this node shared tween with the previous node,
@@ -2077,7 +2535,7 @@
     var id = transition._id;
 
     transition.each(function() {
-      var schedule = set$1(this, id);
+      var schedule = set$2(this, id);
       (schedule.value || (schedule.value = {}))[name] = value.apply(this, arguments);
     });
 
@@ -2235,13 +2693,13 @@
 
   function durationFunction(id, value) {
     return function() {
-      set$1(this, id).duration = +value.apply(this, arguments);
+      set$2(this, id).duration = +value.apply(this, arguments);
     };
   }
 
   function durationConstant(id, value) {
     return value = +value, function() {
-      set$1(this, id).duration = value;
+      set$2(this, id).duration = value;
     };
   }
 
@@ -2258,7 +2716,7 @@
   function easeConstant(id, value) {
     if (typeof value !== "function") throw new Error;
     return function() {
-      set$1(this, id).ease = value;
+      set$2(this, id).ease = value;
     };
   }
 
@@ -2311,7 +2769,7 @@
   }
 
   function onFunction(id, name, listener) {
-    var on0, on1, sit = start(name) ? init : set$1;
+    var on0, on1, sit = start(name) ? init : set$2;
     return function() {
       var schedule = sit(this, id),
           on = schedule.on;
@@ -2442,7 +2900,7 @@
   function styleMaybeRemove(id, name) {
     var on0, on1, listener0, key = "style." + name, event = "end." + key, remove;
     return function() {
-      var schedule = set$1(this, id),
+      var schedule = set$2(this, id),
           on = schedule.on,
           listener = schedule.value[key] == null ? remove || (remove = styleRemove$1(name)) : undefined;
 
@@ -2541,7 +2999,7 @@
           end = {value: function() { if (--size === 0) resolve(); }};
 
       that.each(function() {
-        var schedule = set$1(this, id),
+        var schedule = set$2(this, id),
             on = schedule.on;
 
         // If this node shared a dispatch with the previous node,
@@ -2606,18 +3064,6 @@
     end: transition_end
   };
 
-  function linear$1(t) {
-    return +t;
-  }
-
-  function cubicInOut(t) {
-    return ((t *= 2) <= 1 ? t * t * t : (t -= 2) * t * t + 2) / 2;
-  }
-
-  var pi = Math.PI;
-
-  var tau = 2 * Math.PI;
-
   var defaultTiming = {
     time: null, // Set on use.
     delay: 0,
@@ -2659,456 +3105,11 @@
   selection.prototype.interrupt = selection_interrupt;
   selection.prototype.transition = selection_transition;
 
-  var prefix = "$";
-
-  function Map() {}
-
-  Map.prototype = map.prototype = {
-    constructor: Map,
-    has: function(key) {
-      return (prefix + key) in this;
-    },
-    get: function(key) {
-      return this[prefix + key];
-    },
-    set: function(key, value) {
-      this[prefix + key] = value;
-      return this;
-    },
-    remove: function(key) {
-      var property = prefix + key;
-      return property in this && delete this[property];
-    },
-    clear: function() {
-      for (var property in this) if (property[0] === prefix) delete this[property];
-    },
-    keys: function() {
-      var keys = [];
-      for (var property in this) if (property[0] === prefix) keys.push(property.slice(1));
-      return keys;
-    },
-    values: function() {
-      var values = [];
-      for (var property in this) if (property[0] === prefix) values.push(this[property]);
-      return values;
-    },
-    entries: function() {
-      var entries = [];
-      for (var property in this) if (property[0] === prefix) entries.push({key: property.slice(1), value: this[property]});
-      return entries;
-    },
-    size: function() {
-      var size = 0;
-      for (var property in this) if (property[0] === prefix) ++size;
-      return size;
-    },
-    empty: function() {
-      for (var property in this) if (property[0] === prefix) return false;
-      return true;
-    },
-    each: function(f) {
-      for (var property in this) if (property[0] === prefix) f(this[property], property.slice(1), this);
-    }
-  };
-
-  function map(object, f) {
-    var map = new Map;
-
-    // Copy constructor.
-    if (object instanceof Map) object.each(function(value, key) { map.set(key, value); });
-
-    // Index array by numeric index or specified key function.
-    else if (Array.isArray(object)) {
-      var i = -1,
-          n = object.length,
-          o;
-
-      if (f == null) while (++i < n) map.set(i, object[i]);
-      else while (++i < n) map.set(f(o = object[i], i, object), o);
-    }
-
-    // Convert object to map.
-    else if (object) for (var key in object) map.set(key, object[key]);
-
-    return map;
-  }
-
-  function Set() {}
-
-  var proto = map.prototype;
-
-  Set.prototype = set$2.prototype = {
-    constructor: Set,
-    has: proto.has,
-    add: function(value) {
-      value += "";
-      this[prefix + value] = value;
-      return this;
-    },
-    remove: proto.remove,
-    clear: proto.clear,
-    values: proto.keys,
-    size: proto.size,
-    empty: proto.empty,
-    each: proto.each
-  };
-
-  function set$2(object, f) {
-    var set = new Set;
-
-    // Copy constructor.
-    if (object instanceof Set) object.each(function(value) { set.add(value); });
-
-    // Otherwise, assume it’s an array.
-    else if (object) {
-      var i = -1, n = object.length;
-      if (f == null) while (++i < n) set.add(object[i]);
-      else while (++i < n) set.add(f(object[i], i, object));
-    }
-
-    return set;
-  }
-
-  function request(url, callback) {
-    var request,
-        event = dispatch("beforesend", "progress", "load", "error"),
-        mimeType,
-        headers = map(),
-        xhr = new XMLHttpRequest,
-        user = null,
-        password = null,
-        response,
-        responseType,
-        timeout = 0;
-
-    // If IE does not support CORS, use XDomainRequest.
-    if (typeof XDomainRequest !== "undefined"
-        && !("withCredentials" in xhr)
-        && /^(http(s)?:)?\/\//.test(url)) xhr = new XDomainRequest;
-
-    "onload" in xhr
-        ? xhr.onload = xhr.onerror = xhr.ontimeout = respond
-        : xhr.onreadystatechange = function(o) { xhr.readyState > 3 && respond(o); };
-
-    function respond(o) {
-      var status = xhr.status, result;
-      if (!status && hasResponse(xhr)
-          || status >= 200 && status < 300
-          || status === 304) {
-        if (response) {
-          try {
-            result = response.call(request, xhr);
-          } catch (e) {
-            event.call("error", request, e);
-            return;
-          }
-        } else {
-          result = xhr;
-        }
-        event.call("load", request, result);
-      } else {
-        event.call("error", request, o);
-      }
-    }
-
-    xhr.onprogress = function(e) {
-      event.call("progress", request, e);
-    };
-
-    request = {
-      header: function(name, value) {
-        name = (name + "").toLowerCase();
-        if (arguments.length < 2) return headers.get(name);
-        if (value == null) headers.remove(name);
-        else headers.set(name, value + "");
-        return request;
-      },
-
-      // If mimeType is non-null and no Accept header is set, a default is used.
-      mimeType: function(value) {
-        if (!arguments.length) return mimeType;
-        mimeType = value == null ? null : value + "";
-        return request;
-      },
-
-      // Specifies what type the response value should take;
-      // for instance, arraybuffer, blob, document, or text.
-      responseType: function(value) {
-        if (!arguments.length) return responseType;
-        responseType = value;
-        return request;
-      },
-
-      timeout: function(value) {
-        if (!arguments.length) return timeout;
-        timeout = +value;
-        return request;
-      },
-
-      user: function(value) {
-        return arguments.length < 1 ? user : (user = value == null ? null : value + "", request);
-      },
-
-      password: function(value) {
-        return arguments.length < 1 ? password : (password = value == null ? null : value + "", request);
-      },
-
-      // Specify how to convert the response content to a specific type;
-      // changes the callback value on "load" events.
-      response: function(value) {
-        response = value;
-        return request;
-      },
-
-      // Alias for send("GET", …).
-      get: function(data, callback) {
-        return request.send("GET", data, callback);
-      },
-
-      // Alias for send("POST", …).
-      post: function(data, callback) {
-        return request.send("POST", data, callback);
-      },
-
-      // If callback is non-null, it will be used for error and load events.
-      send: function(method, data, callback) {
-        xhr.open(method, url, true, user, password);
-        if (mimeType != null && !headers.has("accept")) headers.set("accept", mimeType + ",*/*");
-        if (xhr.setRequestHeader) headers.each(function(value, name) { xhr.setRequestHeader(name, value); });
-        if (mimeType != null && xhr.overrideMimeType) xhr.overrideMimeType(mimeType);
-        if (responseType != null) xhr.responseType = responseType;
-        if (timeout > 0) xhr.timeout = timeout;
-        if (callback == null && typeof data === "function") callback = data, data = null;
-        if (callback != null && callback.length === 1) callback = fixCallback(callback);
-        if (callback != null) request.on("error", callback).on("load", function(xhr) { callback(null, xhr); });
-        event.call("beforesend", request, xhr);
-        xhr.send(data == null ? null : data);
-        return request;
-      },
-
-      abort: function() {
-        xhr.abort();
-        return request;
-      },
-
-      on: function() {
-        var value = event.on.apply(event, arguments);
-        return value === event ? request : value;
-      }
-    };
-
-    if (callback != null) {
-      if (typeof callback !== "function") throw new Error("invalid callback: " + callback);
-      return request.get(callback);
-    }
-
-    return request;
-  }
-
-  function fixCallback(callback) {
-    return function(error, xhr) {
-      callback(error == null ? xhr : null);
-    };
-  }
-
-  function hasResponse(xhr) {
-    var type = xhr.responseType;
-    return type && type !== "text"
-        ? xhr.response // null on error
-        : xhr.responseText; // "" on error
-  }
-
-  var EOL = {},
-      EOF = {},
-      QUOTE = 34,
-      NEWLINE = 10,
-      RETURN = 13;
-
-  function objectConverter(columns) {
-    return new Function("d", "return {" + columns.map(function(name, i) {
-      return JSON.stringify(name) + ": d[" + i + "]";
-    }).join(",") + "}");
-  }
-
-  function customConverter(columns, f) {
-    var object = objectConverter(columns);
-    return function(row, i) {
-      return f(object(row), i, columns);
-    };
-  }
-
-  // Compute unique columns in order of discovery.
-  function inferColumns(rows) {
-    var columnSet = Object.create(null),
-        columns = [];
-
-    rows.forEach(function(row) {
-      for (var column in row) {
-        if (!(column in columnSet)) {
-          columns.push(columnSet[column] = column);
-        }
-      }
-    });
-
-    return columns;
-  }
-
-  function pad(value, width) {
-    var s = value + "", length = s.length;
-    return length < width ? new Array(width - length + 1).join(0) + s : s;
-  }
-
-  function formatYear(year) {
-    return year < 0 ? "-" + pad(-year, 6)
-      : year > 9999 ? "+" + pad(year, 6)
-      : pad(year, 4);
-  }
-
-  function formatDate(date) {
-    var hours = date.getUTCHours(),
-        minutes = date.getUTCMinutes(),
-        seconds = date.getUTCSeconds(),
-        milliseconds = date.getUTCMilliseconds();
-    return isNaN(date) ? "Invalid Date"
-        : formatYear(date.getUTCFullYear(), 4) + "-" + pad(date.getUTCMonth() + 1, 2) + "-" + pad(date.getUTCDate(), 2)
-        + (milliseconds ? "T" + pad(hours, 2) + ":" + pad(minutes, 2) + ":" + pad(seconds, 2) + "." + pad(milliseconds, 3) + "Z"
-        : seconds ? "T" + pad(hours, 2) + ":" + pad(minutes, 2) + ":" + pad(seconds, 2) + "Z"
-        : minutes || hours ? "T" + pad(hours, 2) + ":" + pad(minutes, 2) + "Z"
-        : "");
-  }
-
-  function dsv(delimiter) {
-    var reFormat = new RegExp("[\"" + delimiter + "\n\r]"),
-        DELIMITER = delimiter.charCodeAt(0);
-
-    function parse(text, f) {
-      var convert, columns, rows = parseRows(text, function(row, i) {
-        if (convert) return convert(row, i - 1);
-        columns = row, convert = f ? customConverter(row, f) : objectConverter(row);
-      });
-      rows.columns = columns || [];
-      return rows;
-    }
-
-    function parseRows(text, f) {
-      var rows = [], // output rows
-          N = text.length,
-          I = 0, // current character index
-          n = 0, // current line number
-          t, // current token
-          eof = N <= 0, // current token followed by EOF?
-          eol = false; // current token followed by EOL?
-
-      // Strip the trailing newline.
-      if (text.charCodeAt(N - 1) === NEWLINE) --N;
-      if (text.charCodeAt(N - 1) === RETURN) --N;
-
-      function token() {
-        if (eof) return EOF;
-        if (eol) return eol = false, EOL;
-
-        // Unescape quotes.
-        var i, j = I, c;
-        if (text.charCodeAt(j) === QUOTE) {
-          while (I++ < N && text.charCodeAt(I) !== QUOTE || text.charCodeAt(++I) === QUOTE);
-          if ((i = I) >= N) eof = true;
-          else if ((c = text.charCodeAt(I++)) === NEWLINE) eol = true;
-          else if (c === RETURN) { eol = true; if (text.charCodeAt(I) === NEWLINE) ++I; }
-          return text.slice(j + 1, i - 1).replace(/""/g, "\"");
-        }
-
-        // Find next delimiter or newline.
-        while (I < N) {
-          if ((c = text.charCodeAt(i = I++)) === NEWLINE) eol = true;
-          else if (c === RETURN) { eol = true; if (text.charCodeAt(I) === NEWLINE) ++I; }
-          else if (c !== DELIMITER) continue;
-          return text.slice(j, i);
-        }
-
-        // Return last token before EOF.
-        return eof = true, text.slice(j, N);
-      }
-
-      while ((t = token()) !== EOF) {
-        var row = [];
-        while (t !== EOL && t !== EOF) row.push(t), t = token();
-        if (f && (row = f(row, n++)) == null) continue;
-        rows.push(row);
-      }
-
-      return rows;
-    }
-
-    function preformatBody(rows, columns) {
-      return rows.map(function(row) {
-        return columns.map(function(column) {
-          return formatValue(row[column]);
-        }).join(delimiter);
-      });
-    }
-
-    function format(rows, columns) {
-      if (columns == null) columns = inferColumns(rows);
-      return [columns.map(formatValue).join(delimiter)].concat(preformatBody(rows, columns)).join("\n");
-    }
-
-    function formatBody(rows, columns) {
-      if (columns == null) columns = inferColumns(rows);
-      return preformatBody(rows, columns).join("\n");
-    }
-
-    function formatRows(rows) {
-      return rows.map(formatRow).join("\n");
-    }
-
-    function formatRow(row) {
-      return row.map(formatValue).join(delimiter);
-    }
-
-    function formatValue(value) {
-      return value == null ? ""
-          : value instanceof Date ? formatDate(value)
-          : reFormat.test(value += "") ? "\"" + value.replace(/"/g, "\"\"") + "\""
-          : value;
-    }
-
-    return {
-      parse: parse,
-      parseRows: parseRows,
-      format: format,
-      formatBody: formatBody,
-      formatRows: formatRows
-    };
-  }
-
-  var csv = dsv(",");
-
-  var csvParse = csv.parse;
-
-  var tsv = dsv("\t");
-
-  function dsv$1(defaultMimeType, parse) {
-    return function(url, row, callback) {
-      if (arguments.length < 3) callback = row, row = null;
-      var r = request(url).mimeType(defaultMimeType);
-      r.row = function(_) { return arguments.length ? r.response(responseOf(parse, row = _)) : row; };
-      r.row(row);
-      return callback ? r.get(callback) : r;
-    };
-  }
-
-  function responseOf(parse, row) {
-    return function(request) {
-      return parse(request.responseText, row);
-    };
-  }
-
-  var csv$1 = dsv$1("text/csv", csvParse);
-
   exports.csv = csv$1;
-  exports.easeLinear = linear$1;
+  exports.easeLinear = linear;
   exports.select = select;
   exports.selectAll = selectAll;
+  exports.transition = transition;
 
   Object.defineProperty(exports, '__esModule', { value: true });
 

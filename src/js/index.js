@@ -135,63 +135,63 @@ function ao() {
                         .remove()
                         .exit();
                     scrollCircles(0, 0);
-                    asesinadas(54);
+                    asesinadas(63);
                 } else if (response.index === 1) {
                     scrollCircles(0, 1);
-                    asesinadas(104);
+                    asesinadas(113);
                 } else if (response.index === 2) {
                     scrollCircles(0, 2);
-                    asesinadas(158);
+                    asesinadas(167);
                 } else if (response.index === 3) {
                     scrollCircles(0, 3);
-                    asesinadas(229);
+                    asesinadas(238);
                 } else if (response.index === 4) {
                     scrollCircles(0, 4);
-                    asesinadas(301);
+                    asesinadas(310);
                 } else if (response.index === 5) {
                     scrollCircles(0, 5);
-                    asesinadas(358);
+                    asesinadas(367);
                 } else if (response.index === 6) {
                     scrollCircles(0, 6);
-                    asesinadas(427);
+                    asesinadas(436);
                 } else if (response.index === 7) {
                     scrollCircles(0, 7);
-                    asesinadas(498);
+                    asesinadas(507);
                 } else if (response.index === 8) {
                     scrollCircles(0, 8);
-                    asesinadas(574);
+                    asesinadas(583);
                 } else if (response.index === 9) {
                     scrollCircles(0, 9);
-                    asesinadas(640);
+                    asesinadas(639);
                 } else if (response.index === 10) {
                     scrollCircles(1, 0);
-                    asesinadas(713);
+                    asesinadas(712);
                 } else if (response.index === 11) {
                     scrollCircles(1, 1);
-                    asesinadas(774);
+                    asesinadas(773);
                 } else if (response.index === 12) {
                     scrollCircles(1, 2);
-                    asesinadas(826);
+                    asesinadas(825);
                 } else if (response.index === 13) {
                     scrollCircles(1, 3);
-                    asesinadas(880);
+                    asesinadas(879);
                 } else if (response.index === 14) {
                     scrollCircles(1, 4);
-                    asesinadas(935);
+                    asesinadas(934);
                 } else if (response.index === 15) {
                     scrollCircles(1, 5);
-                    asesinadas(995);
+                    asesinadas(994);
                 } else if (response.index === 16) {
                     scrollCircles(1, 6);
                     scrollCircles(1, 7);
-                    asesinadas(1044);
+                    asesinadas(1043);
                 } else if (response.index === 17) {
                     scrollCircles(1, 8);
                     scrollCircles(1, 9);
-                    asesinadas(1095);
+                    asesinadas(1094);
                 } else if (response.index === 18) {
                     ana();
-                    asesinadas(1142);
+                    asesinadas(1141);
                 }
             };
 

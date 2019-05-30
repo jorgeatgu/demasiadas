@@ -17,7 +17,6 @@ body {
 
 .header {
     height: 90vh;
-    background: linear-gradient(170deg, var(--purple) 40%, var(--black) 100%);
     position: relative;
     background-image: url(../img/header.jpg);
     -webkit-background-size: cover;
@@ -28,11 +27,10 @@ body {
 .header-title {
     font-size: 2rem;
     font-family: var(--title);
-    color: #0d3538;
+    color: var(--black);
     position: absolute;
-    letter-spacing: 3px;
     margin: 0;
-    top: 25%;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
@@ -119,37 +117,6 @@ body {
     background-color: var(--black);
 }
 
-.blend-container {
-    position: relative;
-    overflow: hidden;
-    width: 100%;
-    height: 100%;
-    background-color: #FCA300;
-
-    &:after {
-        content: '';
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        transition: all ease-in-out .5s;
-        background-color: #e23241;
-        mix-blend-mode: lighten;
-    }
-}
-
-.blend-image {
-    mix-blend-mode: darken;
-    -webkit-filter: grayscale(100%) contrast(1.5);
-    filter: grayscale(100%) contrast(1.5);
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    transition: all ease-in-out .5s;
-}
-
 @media only screen and (min-width: 48rem) {
 
     .header-title {
@@ -187,7 +154,8 @@ body {
 @media only screen and (min-width: 60rem) {
 
     .header-title {
-        font-size: 5rem;
+        font-size: 6rem;
+        left: 17%;
     }
 
 }

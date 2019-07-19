@@ -16,6 +16,15 @@
 }
 
 .footer-container {
-    max-width: 25rem;
+    width: 90%;
     margin: 0 auto;
+    padding: 3rem 0;
+}
+
+@media only screen and (min-width: 48rem) {
+
+    .footer-container {
+        width: 25rem;
+    }
+
 }

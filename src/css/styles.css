@@ -1,10 +1,9 @@
 @import '_variables';
 @import '_scroll';
-@import '_proyectos';
 @import '_footer';
 
 html {
-    line-height: 1.3;
+    line-height: 1.5;
 }
 
 * {
@@ -16,23 +15,29 @@ body {
 }
 
 .header {
-    height: 90vh;
+    height: 70vh;
     position: relative;
-    background-image: url(../img/header.jpg);
-    -webkit-background-size: cover;
-    background-size: cover;
+    background-color: var(--black);
+}
 
+.header-img {
+    object-fit: cover;
+    width: 100%;
+}
+
+.header-container {
+    padding: 2rem 3rem;
+    z-index: 2;
+    width: 25rem;
+    color: var(--white);
 }
 
 .header-title {
     font-size: 2rem;
     font-family: var(--title);
-    color: var(--black);
-    position: absolute;
     margin: 0;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    text-transform: uppercase;
+
 }
 
 .chart-container {
@@ -86,7 +91,6 @@ body {
     font-family: var(--text);
     max-width: 25rem;
     margin: 1rem auto;
-    line-height: 1.4;
 }
 
 .asesinadas {
@@ -119,12 +123,15 @@ body {
 
 @media only screen and (min-width: 48rem) {
 
-    .header-title {
-        font-size: 4rem;
+    .header {
+        height: 90vh;
     }
 
-    .header {
-        height: 100vh;
+    .header-container {
+        position: absolute;
+        top: 40%;
+        left: 20%;
+        transform: translate(-50%, 30%);
     }
 
     .grid-ao {
@@ -147,15 +154,6 @@ body {
 
     .asesinadas-numero {
         font-size: 2rem;
-    }
-
-}
-
-@media only screen and (min-width: 60rem) {
-
-    .header-title {
-        font-size: 6rem;
-        left: 17%;
     }
 
 }

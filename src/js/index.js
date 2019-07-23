@@ -193,7 +193,7 @@ function ao() {
                     asesinadas(1142);
                 } else if (response.index === 19) {
                     ana();
-                    asesinadas(1174);
+                    asesinadas(1176);
                 }
             };
 
@@ -214,6 +214,7 @@ function ao() {
 
         scrolama();
     };
+
 
     const resize = () => {
         updateChart(dataz);

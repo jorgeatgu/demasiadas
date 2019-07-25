@@ -17,9 +17,7 @@
         "HTMLImports": true,
         "Polymer": true,
         "ShadyDOM": true
-
     },
-    "parser": "babel-eslint",
     "parserOptions": {
       "ecmaVersion": 6,
       "ecmaFeatures": {

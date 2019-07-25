@@ -55,12 +55,6 @@
     line-height: 1;
 }
 
-.step-text {
-    margin: 0;
-    font-family: var(--number);
-    text-transform: uppercase;
-}
-
 .chart-ao {
     width: 100%;
     margin: 0;

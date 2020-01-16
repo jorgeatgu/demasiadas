@@ -1,1 +1,656 @@
-/*! normalize.css v9.0.1 | MIT License | github.com/csstools/normalize.css */html{line-height:1.15;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}h1{font-size:2em;margin:.67em 0}hr{box-sizing:content-box;height:0;overflow:visible}main{display:block}pre{font-family:monospace,monospace;font-size:1em}a{background-color:transparent}abbr[title]{text-decoration:underline;text-decoration:underline dotted}b,strong{font-weight:bolder}code,kbd,samp{font-family:monospace,monospace;font-size:1em}small{font-size:80%}img{border-style:none}svg:not(:root){overflow:hidden}button,input,select{margin:0}button{overflow:visible;text-transform:none}[type=button],[type=reset],[type=submit],button{-webkit-appearance:button}fieldset{padding:.35em .75em .625em}input{overflow:visible}legend{box-sizing:border-box;color:inherit;display:table;max-width:100%;white-space:normal}progress{display:inline-block;vertical-align:baseline}select{text-transform:none}textarea{margin:0;overflow:auto}[type=checkbox],[type=radio]{box-sizing:border-box;padding:0}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}::-webkit-input-placeholder{color:inherit;opacity:.54}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}::-moz-focus-inner{border-style:none;padding:0}:-moz-focusring{outline:1px dotted ButtonText}details,dialog{display:block}dialog{background-color:#fff;border:solid;color:#000;height:-moz-fit-content;height:-webkit-fit-content;height:fit-content;left:0;margin:auto;padding:1em;position:absolute;right:0;width:-moz-fit-content;width:-webkit-fit-content;width:fit-content}dialog:not([open]){display:none}summary{display:list-item}[hidden],template{display:none}:root{--fontSystem:BlinkMacSystemFont,-apple-system,"Segoe UI","Roboto","Oxygen","Ubuntu","Cantarell","Fira Sans","Droid Sans","Helvetica Neue",Helvetica,sans-serif;--monospace:"SFMono-Regular",Consolas,Menlo,Courier,monospace;--black:#0b0b0b;--white:#fff;--yellow:#fac92f;--purple:#170b38;--purple-light:#deb9ec;--redstep:#df3445;--yellowalpha:rgba(250,201,47,.8);--title:"Yeseva One",cursive;--text:"Merriweather",serif;--number:"Archivo Black",sans-serif}#scroll{position:relative;background-color:#0b0b0b;background-color:var(--black);padding:2rem 0;grid-template-columns:100%;display:grid}.scroll-graphic{order:1;z-index:1;position:-webkit-sticky;position:sticky;transform:translateZ(0);top:0}.scroll-text{position:relative;order:2;z-index:2}.step{margin:0 auto;height:95vh}.step-subcontainer{background-color:#df3445;background-color:var(--redstep);border-radius:4px;padding:1rem;text-align:center;max-width:70%;width:max-content;margin:0 auto}.step-title{font-size:1rem;color:#0b0b0b;color:var(--black);padding:0;margin-top:0;margin-bottom:.25rem}.step-number,.step-title{font-family:Archivo Black,sans-serif;font-family:var(--number)}.step-number{font-size:4rem;line-height:1}.chart-ao{width:100%;margin:0;position:static}.step-container{margin:auto}@media only screen and (min-width:60rem){#scroll{padding:5rem 0;grid-template-columns:25rem 1fr}.scroll-graphic{order:2;position:static}.scroll-text{order:1}.step-number{font-size:12rem}.step-subcontainer{padding:3rem 1rem}.step-title{font-size:1rem}.chart-ao{position:-webkit-sticky;position:sticky;top:0}}.footer{background-color:#0b0b0b;background-color:var(--black);width:100%;padding:10vh 0}.footer-links,.footer-texto{font-family:Merriweather,serif;font-family:var(--text);font-size:1rem;color:#fff;color:var(--white)}.footer-container{width:90%;margin:0 auto;padding:3rem 0}@media only screen and (min-width:48rem){.footer-container{width:25rem}}html{line-height:1.5}*{box-sizing:border-box}body{margin:0}.header{height:70vh;position:relative;background-color:#0b0b0b;background-color:var(--black)}.header-img{object-fit:cover;width:100%}.header-container{padding:2rem 3rem;z-index:2;width:25rem;color:#fff;color:var(--white)}.header-title{font-size:2rem;font-family:Yeseva One,cursive;font-family:var(--title);margin:0;text-transform:uppercase}.chart-container{background-color:#fff;background-color:var(--white);width:100%}.grid-ao{background-color:#deb9ec;background-color:var(--purple-light);padding-bottom:2rem}.grid-ao-element-white{width:90%;margin:0 auto;padding:1rem}.grid-ao-black-container{width:100%}.ilustration-xavier{font-size:.75rem;font-family:Merriweather,serif;font-family:var(--text);color:#0b0b0b;color:var(--black);display:block;margin-bottom:.25rem}.grid-ao-black-image{width:100%}.chart-ao-text{width:90%;margin:0 auto;padding:3rem 0}.chart-ao-text-title{font-size:2rem;font-family:Yeseva One,cursive;font-family:var(--title);margin:0 auto;margin-top:1.5rem;max-width:25rem}.chart-ao-text-paragraph{font-size:1rem;max-width:25rem;margin:1rem auto}.asesinadas,.chart-ao-text-paragraph{font-family:Merriweather,serif;font-family:var(--text)}.asesinadas{position:-webkit-sticky;position:sticky;top:94vh;z-index:3;font-size:.75rem;color:#fff;color:var(--white);padding:.5rem;margin:0;margin-right:.5rem;background-color:#0b0b0b;background-color:var(--black);width:100%;text-align:center;padding-bottom:3rem}.asesinadas-numero{font-size:1.25rem;font-family:Archivo Black,sans-serif;font-family:var(--number)}.container-scroll{background-color:#0b0b0b;background-color:var(--black)}@media only screen and (min-width:48rem){.header{height:90vh}.header-container{position:absolute;top:40%;left:20%;transform:translate(-50%,30%)}.grid-ao{width:100%}.grid-ao-black-container{margin-top:-4rem;position:relative}.grid-ao-element-white{max-width:50rem}.asesinadas{font-size:1rem;background-color:transparent}.asesinadas-numero{font-size:2rem}}
+/*! normalize.css v9.0.1 | MIT License | github.com/csstools/normalize.css */
+
+/* Document
+ * ========================================================================== */
+
+/**
+ * 1. Correct the line height in all browsers.
+ * 2. Prevent adjustments of font size after orientation changes in
+ *    IE on Windows Phone and in iOS.
+ */
+
+html {
+  line-height: 1.15; /* 1 */
+  -ms-text-size-adjust: 100%; /* 2 */
+  -webkit-text-size-adjust: 100%; /* 2 */
+}
+
+/* Sections
+ * ========================================================================== */
+
+/**
+ * Correct the font size and margin on `h1` elements within `section` and
+ * `article` contexts in Chrome, Firefox, and Safari.
+ */
+
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+/* Grouping content
+ * ========================================================================== */
+
+/**
+ * 1. Add the correct box sizing in Firefox.
+ * 2. Show the overflow in Edge and IE.
+ */
+
+hr {
+  box-sizing: content-box; /* 1 */
+  height: 0; /* 1 */
+  overflow: visible; /* 2 */
+}
+
+/**
+ * Add the correct display in IE.
+ */
+
+main {
+  display: block;
+}
+
+/**
+ * 1. Correct the inheritance and scaling of font size in all browsers.
+ * 2. Correct the odd `em` font sizing in all browsers.
+ */
+
+pre {
+  font-family: monospace, monospace; /* 1 */
+  font-size: 1em; /* 2 */
+}
+
+/* Text-level semantics
+ * ========================================================================== */
+
+/**
+ * Remove the gray background on active links in IE 10.
+ */
+
+a {
+  background-color: transparent;
+}
+
+/**
+ * Add the correct text decoration in Edge, IE, Opera, and Safari.
+ */
+
+abbr[title] {
+  text-decoration: underline;
+  text-decoration: underline dotted;
+}
+
+/**
+ * Add the correct font weight in Chrome, Edge, and Safari.
+ */
+
+b,
+strong {
+  font-weight: bolder;
+}
+
+/**
+ * 1. Correct the inheritance and scaling of font size in all browsers.
+ * 2. Correct the odd `em` font sizing in all browsers.
+ */
+
+code,
+kbd,
+samp {
+  font-family: monospace, monospace; /* 1 */
+  font-size: 1em; /* 2 */
+}
+
+/**
+ * Add the correct font size in all browsers.
+ */
+
+small {
+  font-size: 80%;
+}
+
+/* Embedded content
+ * ========================================================================== */
+
+/**
+ * Remove the border on images inside links in IE 10-.
+ */
+
+img {
+  border-style: none;
+}
+
+/**
+ * Hide the overflow in IE.
+ */
+
+svg:not(:root) {
+  overflow: hidden;
+}
+
+/* Forms
+ * ========================================================================== */
+
+/**
+ * Remove the margin in Safari.
+ */
+
+button,
+input,
+select {
+  margin: 0;
+}
+
+/**
+ * 1. Show the overflow in IE.
+ * 2. Remove the inheritance of text transform in Edge, Firefox, and IE.
+ */
+
+button {
+  overflow: visible; /* 1 */
+  text-transform: none; /* 2 */
+}
+
+/**
+ * Correct the inability to style clickable types in iOS and Safari.
+ */
+
+button,
+[type="button"],
+[type="reset"],
+[type="submit"] {
+  -webkit-appearance: button;
+}
+
+/**
+ * Correct the padding in Firefox.
+ */
+
+fieldset {
+  padding: 0.35em 0.75em 0.625em;
+}
+
+/**
+ * Show the overflow in Edge and IE.
+ */
+
+input {
+  overflow: visible;
+}
+
+/**
+ * 1. Correct the text wrapping in Edge and IE.
+ * 2. Correct the color inheritance from `fieldset` elements in IE.
+ */
+
+legend {
+  box-sizing: border-box; /* 1 */
+  color: inherit; /* 2 */
+  display: table; /* 1 */
+  max-width: 100%; /* 1 */
+  white-space: normal; /* 1 */
+}
+
+/**
+ * 1. Add the correct display in Edge and IE.
+ * 2. Add the correct vertical alignment in Chrome, Firefox, and Opera.
+ */
+
+progress {
+  display: inline-block; /* 1 */
+  vertical-align: baseline; /* 2 */
+}
+
+/**
+ * Remove the inheritance of text transform in Firefox.
+ */
+
+select {
+  text-transform: none;
+}
+
+/**
+ * 1. Remove the margin in Firefox and Safari.
+ * 2. Remove the default vertical scrollbar in IE.
+ */
+
+textarea {
+  margin: 0; /* 1 */
+  overflow: auto; /* 2 */
+}
+
+/**
+ * 1. Add the correct box sizing in IE 10-.
+ * 2. Remove the padding in IE 10-.
+ */
+
+[type="checkbox"],
+[type="radio"] {
+  box-sizing: border-box; /* 1 */
+  padding: 0; /* 2 */
+}
+
+/**
+ * 1. Correct the odd appearance in Chrome and Safari.
+ * 2. Correct the outline style in Safari.
+ */
+
+[type="search"] {
+  -webkit-appearance: textfield; /* 1 */
+  outline-offset: -2px; /* 2 */
+}
+
+/**
+ * Correct the cursor style of increment and decrement buttons in Safari.
+ */
+
+::-webkit-inner-spin-button,
+::-webkit-outer-spin-button {
+  height: auto;
+}
+
+/**
+ * Correct the text style of placeholders in Chrome, Edge, and Safari.
+ */
+
+::-webkit-input-placeholder {
+  color: inherit;
+  opacity: 0.54;
+}
+
+/**
+ * Remove the inner padding in Chrome and Safari on macOS.
+ */
+
+::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+/**
+ * 1. Correct the inability to style clickable types in iOS and Safari.
+ * 2. Change font properties to `inherit` in Safari.
+ */
+
+::-webkit-file-upload-button {
+  -webkit-appearance: button; /* 1 */
+  font: inherit; /* 2 */
+}
+
+/**
+ * Remove the inner border and padding of focus outlines in Firefox.
+ */
+
+::-moz-focus-inner {
+  border-style: none;
+  padding: 0;
+}
+
+/**
+ * Restore the focus outline styles unset by the previous rule in Firefox.
+ */
+
+:-moz-focusring {
+  outline: 1px dotted ButtonText;
+}
+
+/* Interactive
+ * ========================================================================== */
+
+/*
+ * Add the correct display in Edge and IE.
+ */
+
+details {
+  display: block;
+}
+
+/*
+ * Add the correct styles in Edge, IE, and Safari.
+ */
+
+dialog {
+  background-color: white;
+  border: solid;
+  color: black;
+  display: block;
+  height: -moz-fit-content;
+  height: -webkit-fit-content;
+  height: fit-content;
+  left: 0;
+  margin: auto;
+  padding: 1em;
+  position: absolute;
+  right: 0;
+  width: -moz-fit-content;
+  width: -webkit-fit-content;
+  width: fit-content;
+}
+
+dialog:not([open]) {
+  display: none;
+}
+
+/*
+ * Add the correct display in all browsers.
+ */
+
+summary {
+  display: list-item;
+}
+
+/* Scripting
+ * ========================================================================== */
+
+/**
+ * Add the correct display in IE.
+ */
+
+template {
+  display: none;
+}
+
+/* User interaction
+ * ========================================================================== */
+
+/**
+ * Add the correct display in IE 10-.
+ */
+
+[hidden] {
+  display: none;
+}
+:root {
+    --fontSystem: BlinkMacSystemFont, -apple-system, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Helvetica, sans-serif;
+    --monospace: 'SFMono-Regular', Consolas, Menlo, Courier, monospace;
+    --black: #0B0B0B;
+    --white: #fff;
+    --yellow: #FAC92F;
+    --purple: #170b38;
+    --purple-light: #DEB9EC;
+    --redstep: #c6eff5;
+    --yellowalpha: rgba(250, 201, 47, .8);
+    --title: 'Yeseva One', cursive;
+    --text: 'Merriweather', serif;
+    --number: 'Archivo Black', sans-serif;
+}
+#scroll {
+    position: relative;
+    background-color: #0B0B0B;
+    background-color: var(--black);
+    padding: 2rem 0;
+    grid-template-columns: 100%;
+    display: grid;
+}
+.scroll-graphic {
+    order: 1;
+    z-index: 1;
+    /* stylelint-disable */
+    position: -webkit-sticky;
+    position: sticky;
+    /* stylelint-enable */
+    -webkit-transform: translate3d(0, 0, 0);
+    -moz-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    top: 0;
+}
+.scroll-text {
+    position: relative;
+    order: 2;
+    z-index: 2;
+}
+.step {
+    margin: 0 auto;
+    height: 95vh;
+}
+.step-subcontainer {
+    background-color: #c6eff5;
+    background-color: var(--redstep);
+    border-radius: 4px;
+    padding: 1rem;
+    text-align: center;
+    max-width: 70%;
+    width: max-content;
+    margin: 0 auto;
+}
+.step-title {
+    font-size: 1rem;
+    font-family: 'Archivo Black', sans-serif;
+    font-family: var(--number);
+    color: #0B0B0B;
+    color: var(--black);
+    padding: 0;
+    margin-top: 0;
+    margin-bottom: .25rem;
+}
+.step-number {
+    font-size: 4rem;
+    font-family: 'Archivo Black', sans-serif;
+    font-family: var(--number);
+    line-height: 1;
+}
+.chart-ao {
+    width: 100%;
+    margin: 0;
+    position: static;
+}
+.step-container {
+    margin: auto;
+}
+@media only screen and (min-width: 60rem) {
+    #scroll {
+        padding: 5rem 0;
+        grid-template-columns: 25rem 1fr;
+    }
+
+    .scroll-graphic {
+        order: 2;
+        position: static;
+    }
+
+    .scroll-text {
+        order: 1;
+    }
+
+    .step-number {
+        font-size: 12rem;
+    }
+
+    .step-subcontainer {
+        padding: 3rem 1rem;
+    }
+
+    .step-title {
+        font-size: 1rem;
+    }
+
+    .chart-ao {
+        /* stylelint-disable */
+        position: -webkit-sticky;
+        position: sticky;
+        /* stylelint-enable */
+        top: 0;
+    }
+
+}
+.footer {
+    background-color: #0B0B0B;
+    background-color: var(--black);
+    width: 100%;
+    padding: 10vh 0;
+}
+.footer-texto,
+.footer-links {
+    color: #fff;
+    color: var(--white);
+    font-family: 'Merriweather', serif;
+    font-family: var(--text);
+    font-size: 1rem;
+}
+.footer-links {
+    color: #fff;
+    color: var(--white);
+}
+.footer-container {
+    width: 90%;
+    margin: 0 auto;
+    padding: 3rem 0;
+}
+@media only screen and (min-width: 48rem) {
+
+    .footer-container {
+        width: 25rem;
+    }
+
+}
+html {
+    line-height: 1.5;
+}
+* {
+    box-sizing: border-box;
+}
+body {
+    margin: 0;
+}
+.header {
+    height: 70vh;
+    position: relative;
+    background-color: #0B0B0B;
+    background-color: var(--black);
+}
+.header-img {
+    object-fit: cover;
+    width: 100%;
+}
+.header-container {
+    padding: 2rem 3rem;
+    z-index: 2;
+    width: 25rem;
+    color: #fff;
+    color: var(--white);
+}
+.header-title {
+    font-size: 2rem;
+    font-family: 'Yeseva One', cursive;
+    font-family: var(--title);
+    margin: 0;
+    text-transform: uppercase;
+
+}
+.chart-container {
+    background-color: #fff;
+    background-color: var(--white);
+    width: 100%;
+}
+.grid-ao {
+    background-color: #DEB9EC;
+    background-color: var(--purple-light);
+    padding-bottom: 2rem;
+}
+.grid-ao-element-white {
+    width: 90%;
+    margin: 0 auto;
+    padding: 1rem;
+}
+.grid-ao-black-container {
+    width: 100%;
+}
+.ilustration-xavier {
+    font-size: .75rem;
+    font-family: 'Merriweather', serif;
+    font-family: var(--text);
+    color: #0B0B0B;
+    color: var(--black);
+    display: block;
+    margin-bottom: .25rem;
+}
+.grid-ao-black-image {
+    width: 100%;
+}
+.chart-ao-text {
+    width: 90%;
+    margin: 0 auto;
+    padding: 3rem 0;
+}
+.chart-ao-text-title {
+    font-size: 2rem;
+    font-family: 'Yeseva One', cursive;
+    font-family: var(--title);
+    margin: 0 auto;
+    margin-top: 1.5rem;
+    max-width: 25rem;
+}
+.chart-ao-text-paragraph {
+    font-size: 1rem;
+    font-family: 'Merriweather', serif;
+    font-family: var(--text);
+    max-width: 25rem;
+    margin: 1rem auto;
+}
+.asesinadas {
+    /* stylelint-disable */
+    position: -webkit-sticky;
+    position: sticky;
+    /* stylelint-enable */
+    top: 94vh;
+    z-index: 10;
+    font-size: .75rem;
+    font-family: 'Merriweather', serif;
+    font-family: var(--text);
+    color: #fff;
+    color: var(--white);
+    padding: .5rem;
+    margin: 0;
+    margin-right: .5rem;
+    background-color: #0B0B0B;
+    background-color: var(--black);
+    width: 100%;
+    text-align: center;
+    padding-bottom: 3rem;
+}
+.asesinadas-numero {
+    font-size: 1.25rem;
+    font-family: 'Archivo Black', sans-serif;
+    font-family: var(--number);
+}
+.container-scroll {
+    background-color: #0B0B0B;
+    background-color: var(--black);
+}
+@media only screen and (min-width: 48rem) {
+
+    .header {
+        height: 90vh;
+    }
+
+    .header-container {
+        position: absolute;
+        top: 40%;
+        left: 20%;
+        transform: translate(-50%, 30%);
+    }
+
+    .grid-ao {
+        width: 100%;
+    }
+
+    .grid-ao-black-container {
+        margin-top: -4rem;
+        position: relative;
+    }
+
+    .grid-ao-element-white {
+        max-width: 50rem;
+    }
+
+    .asesinadas {
+        font-size: 1rem;
+        background-color: transparent;
+    }
+
+    .asesinadas-numero {
+        font-size: 2rem;
+    }
+
+}
+
+/*# sourceMappingURL=styles.css.map */

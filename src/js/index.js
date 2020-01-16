@@ -183,17 +183,19 @@ function ao() {
                     asesinadas(994);
                 } else if (response.index === 16) {
                     scrollCircles(1, 6);
-                    scrollCircles(1, 7);
                     asesinadas(1043);
                 } else if (response.index === 17) {
-                    scrollCircles(1, 8);
+                    scrollCircles(1, 7);
                     asesinadas(1094);
                 } else if (response.index === 18) {
-                    scrollCircles(1, 9);
+                    scrollCircles(1, 8);
                     asesinadas(1142);
                 } else if (response.index === 19) {
+                    scrollCircles(1, 9);
+                    asesinadas(1197);
+                } else if (response.index === 20) {
                     ana();
-                    asesinadas(1192);
+                    asesinadas(1200);
                 }
             };
 

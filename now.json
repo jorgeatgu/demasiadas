@@ -1,11 +1,7 @@
 {
-    "name": "demasiadas",
-    "env":
-    {
-        "NODE_ENV": "production"
-    },
-    "alias": [
-        "demasiadas"
-    ],
-    "version": 2
+  "env":
+  {
+    "NODE_ENV": "production"
+  },
+  "version": 2
 }

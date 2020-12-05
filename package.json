@@ -15,7 +15,7 @@
   },
   "pre-commit": "lint-staged",
   "scripts": {
-    "server-on": "browser-sync start --server --files '*.css, *.html' --tunnel jorgeatgu",
+    "server-on": "gulp",
     "lint-staged": "lint-staged",
     "build:release": "gulp build",
     "build:d3": "rollup -c && uglifyjs d3.js -c -m -o js/d3.min.js"

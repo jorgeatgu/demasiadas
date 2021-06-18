@@ -197,7 +197,7 @@ function ao() {
           asesinadas(1242);
         } else if (response.index === 21) {
           ana();
-          asesinadas(1257);
+          asesinadas(1262);
         }
       };
 

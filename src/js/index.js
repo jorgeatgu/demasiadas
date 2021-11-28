@@ -162,42 +162,42 @@ function ao() {
           asesinadas(583);
         } else if (response.index === 9) {
           scrollCircles(0, 9);
-          asesinadas(639);
+          asesinadas(640);
         } else if (response.index === 10) {
           scrollCircles(1, 0);
-          asesinadas(712);
+          asesinadas(713);
         } else if (response.index === 11) {
           scrollCircles(1, 1);
-          asesinadas(773);
+          asesinadas(775);
         } else if (response.index === 12) {
           scrollCircles(1, 2);
-          asesinadas(825);
+          asesinadas(826);
         } else if (response.index === 13) {
           scrollCircles(1, 3);
-          asesinadas(879);
+          asesinadas(880);
         } else if (response.index === 14) {
           scrollCircles(1, 4);
-          asesinadas(934);
+          asesinadas(935);
         } else if (response.index === 15) {
           scrollCircles(1, 5);
-          asesinadas(994);
+          asesinadas(995);
         } else if (response.index === 16) {
           scrollCircles(1, 6);
-          asesinadas(1043);
+          asesinadas(1044);
         } else if (response.index === 17) {
           scrollCircles(1, 7);
           asesinadas(1094);
         } else if (response.index === 18) {
           scrollCircles(1, 8);
-          asesinadas(1142);
+          asesinadas(1147);
         } else if (response.index === 19) {
           scrollCircles(1, 9);
-          asesinadas(1197);
+          asesinadas(1202);
         } else if (response.index === 20) {
-          asesinadas(1242);
+          asesinadas(1248);
         } else if (response.index === 21) {
           ana();
-          asesinadas(1262);
+          asesinadas(1285);
         }
       };
 

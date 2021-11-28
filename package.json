@@ -56,5 +56,8 @@
     "rollup-plugin-node-resolve": "^4.0.1",
     "stylelint": "^9.10.1",
     "uglify-es": "^3.3.9"
+  },
+  "resolutions": {
+    "graceful-fs": "^4.2.4"
   }
 }

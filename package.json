@@ -29,7 +29,7 @@
     "d3-ease": "^1.0.5",
     "d3-request": "^1.0.6",
     "d3-selection": "^1.4.0",
-    "d3-transition": "^1.2.0",
+    "d3-transition": "^3.0.1",
     "debounce": "^1.2.0",
     "eslint-plugin-import": "^2.16.0",
     "gulp": "^3.9.1",
